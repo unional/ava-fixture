@@ -1,0 +1,25 @@
+{
+  "atom": {
+    "rewriteTsconfig": false
+  },
+  "buildOnSave": false,
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": ".",
+    "declaration": true,
+    "inlineSources": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "newLine": "LF",
+    "removeComments": true,
+    "rootDir": "src",
+    "outDir": "dist",
+    "sourceMap": true,
+    "target": "es2015"
+  },
+  "files": [
+    "src/index.ts",
+    "typigns/index.d.ts"
+  ]
+}
