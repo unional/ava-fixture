@@ -6,5 +6,6 @@
   },
   "devDependencies": {
     "blue-tape": "registry:npm/blue-tape#0.2.0+20160614064951"
-  }
+  },
+  "dependencies": {}
 }

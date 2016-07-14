@@ -1,23 +1,123 @@
 import { join } from 'path';
-import test, { ContextualTestContext, ContextualTest, Observable } from 'ava';
+import {
+  Test,
+  ContextualTestContext,
+  ContextualCallbackTestContext,
+  Observable,
+  Runner,
+  ContextualRunner,
+  ContextualCallbackTest,
+  ContextualSerialTest,
+  ContextualTest
+} from 'ava';
 
-export interface FixtureTest {
-  (name: string, fixtureName: string, run: (t: ContextualTestContext, path: string) => Promise<void> | Iterator<any> | Observable | void): void;
-  (fixtureName: string, run: (t: ContextualTestContext, path: string) => Promise<void> | Iterator<any> | Observable | void): void;
+export namespace Ava {
+  export interface ContextualTestFunction {
+    (name: string, run: ContextualTest): void;
+    (run: ContextualTest): void;
+  }
 
-  only(name: string, fixtureName: string, run: (t: ContextualTestContext, path: string) => any): void;
-  only(fixtureName: string, run: (t: ContextualTestContext, path: string) => any): void;
+  export interface ContextualSerialTestFunction {
+    (name: string, run: ContextualSerialTest): void;
+    (run: ContextualSerialTest): void;
+  }
 
-  skip(name: string, fixtureName: string, run: (t: ContextualTestContext, path: string) => any): void;
-  skip(fixtureName: string, run: (t: ContextualTestContext, path: string) => any): void;
+  export interface ContextualCallbackTestFunction {
+    (name: string, run: ContextualCallbackTest): void;
+    (run: ContextualCallbackTest): void;
+  }
 
-  serial(name: string, fixtureName: string, run: (t: ContextualTestContext, path: string) => void): void;
-  serial(fixtureName: string, run: (t: ContextualTestContext, path: string) => void): void;
+  export interface Test extends ContextualTestFunction {
+    before: Runner;
+    after: Runner;
+    beforeEach: ContextualRunner;
+    afterEach: ContextualRunner;
+
+    skip: ContextualTestFunction;
+    only: ContextualTestFunction;
+
+    serial: ContextualSerialTestFunction;
+    failing: ContextualCallbackTestFunction;
+    cb: ContextualCallbackTestFunction;
+    todo(name: string): void;
+  }
 }
 
-export default function fixture(path: string): FixtureTest {
-  function curry(testfn: (name: string, run: ContextualTest) => any): any {
-    return (
+export type FixtureContextualTest = (t: ContextualTestContext, path: string) => Promise<void> | Iterator<any> | Observable | void;
+
+export type FixtureContextualSerialTest = (t: ContextualTestContext, path: string) => void;
+
+export type FixtureContextualCallbackTest = (t: ContextualCallbackTestContext, path: string) => void;
+
+export interface BeforeRunner {
+  (title: string, run: Test): void;
+  (run: Test): void;
+  skip: FixtureRunner;
+  cb: FixtureCallbackRunner;
+}
+
+export interface AfterRunner extends BeforeRunner {
+  always: BeforeRunner;
+}
+
+export interface FixtureContextualTestFunction {
+  (title: string, fixtureName: string, run: FixtureContextualTest): void;
+  (fixtureName: string, run: FixtureContextualTest): void;
+}
+
+export interface FixtureContextualSerialTestFunction {
+  (title: string, fixtureName: string, run: FixtureContextualSerialTest): void;
+  (fixtureName: string, run: FixtureContextualSerialTest): void;
+}
+
+export interface FixtureContextualCallbackTestFunction {
+  (title: string, fixtureName: string, run: FixtureContextualCallbackTest): void;
+  (fixtureName: string, run: FixtureContextualCallbackTest): void;
+}
+
+export interface FixtureRunner extends FixtureContextualTestFunction {
+  skip: FixtureRunner;
+  cb: FixtureCallbackRunner;
+}
+
+export interface FixtureCallbackRunner extends FixtureContextualTestFunction {
+  cb: FixtureCallbackRunner;
+}
+
+
+
+export interface FixtureTest extends FixtureContextualTestFunction {
+
+  // before, after, beforeEach, afterEach, skip, only
+  before: BeforeRunner;
+
+  serial: FixtureContextualSerialTestFunction;
+
+  failing: FixtureContextualCallbackTestFunction;
+
+  cb: FixtureContextualCallbackTestFunction;
+
+  todo(title: string): void;
+
+  only(title: string, fixtureName: string, run: (t: ContextualTestContext, path: string) => any): void;
+  only(fixtureName: string, run: (t: ContextualTestContext, path: string) => any): void;
+
+  skip(title: string, fixtureName: string, run: (t: ContextualTestContext, path: string) => any): void;
+  skip(fixtureName: string, run: (t: ContextualTestContext, path: string) => any): void;
+
+  after(title: string, run: (t: ContextualTestContext) => void): void;
+  after(run: (t: ContextualTestContext) => void): void;
+
+  beforeEach(title: string, run: (t: ContextualTestContext) => void): void;
+  beforeEach(run: (t: ContextualTestContext) => void): void;
+
+  afterEach(title: string, run: (t: ContextualTestContext) => void): void;
+  afterEach(run: (t: ContextualTestContext) => void): void;
+}
+
+export default function fixture(ava: Ava.Test, path: string): FixtureTest {
+  function curry<T>(testfn: (name: string, run: any) => any): T {
+    return ((
       name: string,
       fixtureName: string,
       run: (t: ContextualTestContext, path: string) => any
@@ -29,14 +129,30 @@ export default function fixture(path: string): FixtureTest {
       }
 
       const fixturePath = join(path, fixtureName);
-      return testfn(`${name ? name + ' ' : ''}(fixture: ${fixtureName})`, t => {
+      return testfn(`${name ? name + ' ' : ''}(fixture: ${fixtureName})`, (t: any) => {
         return run(t, fixturePath);
       });
-    };
+    }) as any;
   }
-  let result: any = curry(test);
-  result.only = curry(test.only);
-  result.skip = curry(test.skip);
-  result.serial = curry(test.serial);
-  return result as FixtureTest;
+
+  let fn = curry<FixtureContextualTestFunction>(ava);
+
+  let others = {
+    only: curry<FixtureContextualTestFunction>(ava.only),
+    skip: curry<FixtureContextualTestFunction>(ava.skip),
+    serial: curry<FixtureContextualSerialTestFunction>(ava.serial),
+    todo: ava.todo,
+    cb: curry<FixtureContextualCallbackTestFunction>(ava.cb),
+    failing: curry<FixtureContextualCallbackTestFunction>(ava.failing),
+    before: ava.before,
+    beforeEach: ava.beforeEach,
+    after: ava.after,
+    afterEach: ava.afterEach
+  };
+
+  for (let key in others) {
+    (fn as any)[key] = (others as any)[key];
+  }
+
+  return fn as FixtureTest; // fn as typeof fn & typeof others;
 }

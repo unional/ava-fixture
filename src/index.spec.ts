@@ -1,16 +1,18 @@
 import { join } from 'path';
-import fixture from './index';
 import { existsSync } from 'fs';
+import ava from 'ava';
 
-const test = fixture(join(process.env.PWD, 'src/fixtures'));
+import fixture from './index';
 
-test('abs path', 'case-1', (t, path) => {
+const ftest = fixture(ava, join(process.env.PWD, 'src/fixtures'));
+
+ftest('abs path', 'case-1', (t, path) => {
   const filePath = join(path, 'somefile.txt');
   t.plan(1);
   t.true(existsSync(filePath), 'should find somefile.txt');
 });
 
-const rtest = fixture('../src/fixtures');
+const rtest = fixture(ava, '../src/fixtures');
 
 rtest('relative path', 'case-1', (t, path) => {
   const filePath = join(path, 'somefile.txt');
@@ -18,7 +20,7 @@ rtest('relative path', 'case-1', (t, path) => {
   t.true(existsSync(filePath), 'should find somefile.txt');
 });
 
-test('case-1', t => {
+ftest('case-1', t => {
   t.pass('work without title.');
 });
 
@@ -31,18 +33,30 @@ test('case-1', t => {
 //   t.pass('only without title works.');
 // });
 
-test.skip('skip test', 'case-1', t => {
+ftest.skip('skip test', 'case-1', t => {
   t.pass('skip test works.');
 });
 
-test.skip('case-1', t => {
+ftest.skip('case-1', t => {
   t.pass('skip without title works.');
 });
 
-test.serial('serial', 'case-1', t => {
+ftest.serial('serial', 'case-1', t => {
   t.pass('serial works.');
 });
 
-test.serial('case-1', t => {
+ftest.serial('case-1', t => {
   t.pass('serial without title works.');
+});
+
+ftest.todo('todo test');
+
+ftest.cb('cb', 'case-1', t => {
+  t.pass('cb works.');
+  t.end();
+});
+
+ftest.cb('case-1', t => {
+  t.pass('cb without title works.');
+  t.end();
 });
