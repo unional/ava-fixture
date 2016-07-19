@@ -22,7 +22,7 @@
     "build+test": "npm run build && npm test",
     "test+lint": "npm test && npm run lint",
     "preversion": "npm run verify",
-    "prepublish": "typings install"
+    "prepublish": "typings install && npm run build"
   },
   "license": "MIT",
   "keywords": [
