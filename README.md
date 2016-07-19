@@ -59,7 +59,7 @@ typings is available so just follow the code completion.
 ## Contribute
 
 ```sh
-# right after fork
+# after fork
 npm install
 
 # begin making changes
