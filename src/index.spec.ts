@@ -1,6 +1,7 @@
 import { join } from 'path';
 import { existsSync } from 'fs';
 import ava from 'ava';
+import bluebird = require('bluebird');
 
 import fixture from './index';
 
@@ -10,6 +11,9 @@ ftest('abs path', 'case-1', (t, path) => {
   const filePath = join(path, 'somefile.txt');
   t.plan(1);
   t.true(existsSync(filePath), 'should find somefile.txt');
+
+  // make sure it works for custom promise libraries.
+  return bluebird.resolve();
 });
 
 const rtest = fixture(ava, '../fixtures');

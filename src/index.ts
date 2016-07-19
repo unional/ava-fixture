@@ -43,7 +43,7 @@ export namespace Ava {
   }
 }
 
-export type FixtureContextualTest = (t: ContextualTestContext, path: string) => Promise<void> | Iterator<any> | Observable | void;
+export type FixtureContextualTest = (t: ContextualTestContext, path: string) => PromiseLike<void> | Iterator<any> | Observable | void;
 
 export type FixtureContextualSerialTest = (t: ContextualTestContext, path: string) => void;
 

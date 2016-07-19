@@ -3,5 +3,8 @@
   "dependencies": {},
   "globalDevDependencies": {
     "node": "registry:env/node#6.0.0+20160622202520"
+  },
+  "devDependencies": {
+    "bluebird": "registry:npm/bluebird#3.3.4+20160622205516"
   }
 }
