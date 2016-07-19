@@ -4,7 +4,7 @@ import ava from 'ava';
 
 import fixture from './index';
 
-const ftest = fixture(ava, join(process.env.PWD, 'src/fixtures'));
+const ftest = fixture(ava, join(process.env.PWD, 'fixtures'));
 
 ftest('abs path', 'case-1', (t, path) => {
   const filePath = join(path, 'somefile.txt');
@@ -12,7 +12,7 @@ ftest('abs path', 'case-1', (t, path) => {
   t.true(existsSync(filePath), 'should find somefile.txt');
 });
 
-const rtest = fixture(ava, '../src/fixtures');
+const rtest = fixture(ava, '../fixtures');
 
 rtest('relative path', 'case-1', (t, path) => {
   const filePath = join(path, 'somefile.txt');
