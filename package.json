@@ -2,6 +2,11 @@
   "name": "ava-fixture",
   "version": "0.1.0",
   "description": "Write fixture tests with ava",
+  "author": {
+    "name": "Homa Wong",
+    "email": "homawong@gmail.com",
+    "url": "http://github.com/unional"
+  },
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
