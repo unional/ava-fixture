@@ -2,10 +2,10 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch",
+      "name": "Watch",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceRoot}/script/watch.js",
+      "program": "${workspaceRoot}/scripts/watch.js",
       "stopOnEntry": false,
       "args": [],
       "cwd": "${workspaceRoot}",
