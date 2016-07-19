@@ -14,7 +14,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "rimraf dist && tsc -p tsconfig.build.json",
     "lint": "tslint \"src/**/*.ts\"",
     "test": "rimraf dist && tsc && ava \"dist/**/*.spec.js\"",
     "watch": "node scripts/watch.js",
