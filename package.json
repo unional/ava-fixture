@@ -18,7 +18,7 @@
     "lint": "tslint \"src/**/*.ts\"",
     "test": "rimraf dist && tsc && ava \"dist/**/*.spec.js\"",
     "watch": "node scripts/watch.js",
-    "verify": "npm run build && npm -s run test+lint",
+    "verify": "npm -s run test+lint",
     "build+test": "npm run build && npm test",
     "test+lint": "npm test && npm run lint",
     "preversion": "npm run verify",
