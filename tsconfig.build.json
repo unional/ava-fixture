@@ -8,6 +8,9 @@
     "baseUrl": ".",
     "declaration": true,
     "inlineSources": true,
+    "lib": [
+      "es2015"
+    ],
     "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitAny": true,
@@ -16,9 +19,10 @@
     "rootDir": "src",
     "outDir": "dist",
     "sourceMap": true,
-    "target": "es2015"
+    "strictNullChecks": true,
+    "target": "es5"
   },
-  "files": [
+  "include": [
     "src/index.ts",
     "typings/index.d.ts"
   ]

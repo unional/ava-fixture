@@ -1,13 +1,10 @@
 import { join } from 'path';
-import {
+import test, {
   Test,
   ContextualTestContext,
   ContextualCallbackTestContext,
   Observable,
-  Runner,
-  ContextualRunner,
   ContextualCallbackTest,
-  ContextualSerialTest,
   ContextualTest
 } from 'ava';
 
@@ -17,9 +14,9 @@ export namespace Ava {
     (run: ContextualTest): void;
   }
 
-  export interface ContextualSerialTestFunction {
-    (name: string, run: ContextualSerialTest): void;
-    (run: ContextualSerialTest): void;
+  export interface TestFunction {
+    (name: string, implementation: Test): void;
+    (implementation: Test): void;
   }
 
   export interface ContextualCallbackTestFunction {
@@ -28,15 +25,15 @@ export namespace Ava {
   }
 
   export interface Test extends ContextualTestFunction {
-    before: Runner;
-    after: Runner;
-    beforeEach: ContextualRunner;
-    afterEach: ContextualRunner;
+    before: ContextualTestFunction;
+    after: ContextualTestFunction;
+    beforeEach: TestFunction;
+    afterEach: TestFunction;
 
     skip: ContextualTestFunction;
     only: ContextualTestFunction;
 
-    serial: ContextualSerialTestFunction;
+    serial: ContextualTestFunction;
     failing: ContextualCallbackTestFunction;
     cb: ContextualCallbackTestFunction;
     todo(name: string): void;
@@ -115,7 +112,7 @@ export interface FixtureTest extends FixtureContextualTestFunction {
   afterEach(run: (t: ContextualTestContext) => void): void;
 }
 
-export default function fixture(ava: Ava.Test, path: string): FixtureTest {
+export default function fixture(ava: typeof test, path: string): FixtureTest {
   function curry<T>(testfn: (name: string, run: any) => any): T {
     return ((
       name: string,

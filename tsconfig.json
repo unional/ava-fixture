@@ -5,9 +5,11 @@
   "buildOnSave": false,
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": ".",
     "declaration": true,
     "inlineSources": true,
+    "lib": [
+      "es2015"
+    ],
     "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitAny": true,
@@ -16,11 +18,10 @@
     "rootDir": "src",
     "outDir": "dist",
     "sourceMap": true,
-    "target": "es2015"
+    "target": "es5"
   },
   "exclude": [
-    "coverage",
-    "dist",
+    "fixtures",
     "node_modules"
   ]
 }
