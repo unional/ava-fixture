@@ -1,4 +1,4 @@
-import { join } from 'path';
+import { resolve } from 'path';
 import test, {
   Test,
   ContextualTestContext,
@@ -114,27 +114,49 @@ export interface FixtureTest extends FixtureContextualTestFunction {
 
 /**
  * Creates fixture test.
- * @param ava `ava` test (`import test from 'ava'`).
+ * `cwd` is set to the case directory during the test.
+ * @param ava The ava module function (`import ava from 'ava'`).
  * @param path Absolute or relative path to the fixture cases parent directory.
  */
 export default function fixture(ava: typeof test, path: string): FixtureTest {
   function curry<T>(testfn: (name: string, run: any) => any): T {
-    return ((
-      name: string,
-      fixtureName: string,
-      run: (t: ContextualTestContext, path: string) => any
-    ) => {
-      if (!run) {
-        // name is optional
-        run = fixtureName as any;
-        fixtureName = name;
-      }
+    return (
+      /**
+       * Runs a fixture test.
+       * @param [title] Title of the test (for display and filtering).
+       * @param caseName: Name of the test case, matching the folder under `path`.
+       * @param run: The test function.
+       */
+      (
+        title: string,
+        caseName: string,
+        run: (t: ContextualTestContext, path: string) => any
+      ) => {
+        if (!run) {
+          // name is optional
+          run = caseName as any;
+          caseName = title;
+        }
 
-      const fixturePath = join(path, fixtureName);
-      return testfn(`${name ? name + ' ' : ''}(fixture: ${fixtureName})`, (t: any) => {
-        return run(t, fixturePath);
-      });
-    }) as any;
+        const fixturePath = resolve(path, caseName);
+        return testfn(`${title ? title + ' ' : ''}(fixture: ${caseName})`, (t: any) => {
+          let result: any;
+          const cwd = process.cwd();
+          try {
+            process.chdir(fixturePath)
+            result = run(t, fixturePath);
+            if (result && result.then) {
+              return result.then((r: any) => {
+                process.chdir(cwd);
+                return r;
+              })
+            }
+          }
+          finally {
+            process.chdir(cwd)
+          }
+        });
+      }) as any;
   }
 
   let fn = curry<FixtureContextualTestFunction>(ava);
