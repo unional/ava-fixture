@@ -58,18 +58,51 @@ export interface AfterRunner extends BeforeRunner {
 }
 
 export interface FixtureContextualTestFunction {
-  (title: string, fixtureName: string, run: FixtureContextualTest): void;
-  (fixtureName: string, run: FixtureContextualTest): void;
+  /**
+   * Runs a fixture test.
+   * @param title Title of the test (for display and filtering).
+   * @param caseName Name of the test case, matching the folder under `path`.
+   * @param run The test function.
+   */
+  (title: string, caseName: string, run: FixtureContextualTest): void;
+  /**
+   * Runs a fixture test.
+   * @param caseName Name of the test case, matching the folder under `path`.
+   * @param run The test function.
+   */
+  (caseName: string, run: FixtureContextualTest): void;
 }
 
 export interface FixtureContextualSerialTestFunction {
-  (title: string, fixtureName: string, run: FixtureContextualSerialTest): void;
-  (fixtureName: string, run: FixtureContextualSerialTest): void;
+  /**
+   * Runs a fixture test.
+   * @param title Title of the test (for display and filtering).
+   * @param caseName Name of the test case, matching the folder under `path`.
+   * @param run The test function.
+   */
+  (title: string, caseName: string, run: FixtureContextualSerialTest): void;
+  /**
+   * Runs a fixture test.
+   * @param caseName Name of the test case, matching the folder under `path`.
+   * @param run The test function.
+   */
+  (caseName: string, run: FixtureContextualSerialTest): void;
 }
 
 export interface FixtureContextualCallbackTestFunction {
-  (title: string, fixtureName: string, run: FixtureContextualCallbackTest): void;
-  (fixtureName: string, run: FixtureContextualCallbackTest): void;
+  /**
+   * Runs a fixture test.
+   * @param title Title of the test (for display and filtering).
+   * @param caseName Name of the test case, matching the folder under `path`.
+   * @param run The test function.
+   */
+  (title: string, caseName: string, run: FixtureContextualCallbackTest): void;
+  /**
+   * Runs a fixture test.
+   * @param caseName Name of the test case, matching the folder under `path`.
+   * @param run The test function.
+   */
+  (caseName: string, run: FixtureContextualCallbackTest): void;
 }
 
 export interface FixtureRunner extends FixtureContextualTestFunction {
@@ -96,11 +129,11 @@ export interface FixtureTest extends FixtureContextualTestFunction {
 
   todo(title: string): void;
 
-  only(title: string, fixtureName: string, run: (t: ContextualTestContext, path: string) => any): void;
-  only(fixtureName: string, run: (t: ContextualTestContext, path: string) => any): void;
+  only(title: string, caseName: string, run: (t: ContextualTestContext, path: string) => any): void;
+  only(caseName: string, run: (t: ContextualTestContext, path: string) => any): void;
 
-  skip(title: string, fixtureName: string, run: (t: ContextualTestContext, path: string) => any): void;
-  skip(fixtureName: string, run: (t: ContextualTestContext, path: string) => any): void;
+  skip(title: string, caseName: string, run: (t: ContextualTestContext, path: string) => any): void;
+  skip(caseName: string, run: (t: ContextualTestContext, path: string) => any): void;
 
   after(title: string, run: (t: ContextualTestContext) => void): void;
   after(run: (t: ContextualTestContext) => void): void;
@@ -120,43 +153,36 @@ export interface FixtureTest extends FixtureContextualTestFunction {
  */
 export default function fixture(ava: typeof test, path: string): FixtureTest {
   function curry<T>(testfn: (name: string, run: any) => any): T {
-    return (
-      /**
-       * Runs a fixture test.
-       * @param [title] Title of the test (for display and filtering).
-       * @param caseName: Name of the test case, matching the folder under `path`.
-       * @param run: The test function.
-       */
-      (
-        title: string,
-        caseName: string,
-        run: (t: ContextualTestContext, path: string) => any
-      ) => {
-        if (!run) {
-          // name is optional
-          run = caseName as any;
-          caseName = title;
-        }
+    return ((
+      title: string,
+      caseName: string,
+      run: (t: ContextualTestContext, path: string) => any
+    ) => {
+      if (!run) {
+        // name is optional
+        run = caseName as any;
+        caseName = title;
+      }
 
-        const fixturePath = resolve(path, caseName);
-        return testfn(`${title ? title + ' ' : ''}(fixture: ${caseName})`, (t: any) => {
-          let result: any;
-          const cwd = process.cwd();
-          try {
-            process.chdir(fixturePath);
-            result = run(t, fixturePath);
-            if (result && result.then) {
-              return result.then((r: any) => {
-                process.chdir(cwd);
-                return r;
-              });
-            }
+      const fixturePath = resolve(path, caseName);
+      return testfn(`${title ? title + ' ' : ''}(fixture: ${caseName})`, (t: any) => {
+        let result: any;
+        const cwd = process.cwd();
+        try {
+          process.chdir(fixturePath);
+          result = run(t, fixturePath);
+          if (result && result.then) {
+            return result.then((r: any) => {
+              process.chdir(cwd);
+              return r;
+            });
           }
-          finally {
-            process.chdir(cwd);
-          }
-        });
-      }) as any;
+        }
+        finally {
+          process.chdir(cwd);
+        }
+      });
+    }) as any;
   }
 
   let fn = curry<FixtureContextualTestFunction>(ava);
