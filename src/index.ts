@@ -112,6 +112,11 @@ export interface FixtureTest extends FixtureContextualTestFunction {
   afterEach(run: (t: ContextualTestContext) => void): void;
 }
 
+/**
+ * Creates fixture test.
+ * @param ava `ava` test (`import test from 'ava'`).
+ * @param path Absolute or relative path to the fixture cases parent directory.
+ */
 export default function fixture(ava: typeof test, path: string): FixtureTest {
   function curry<T>(testfn: (name: string, run: any) => any): T {
     return ((
