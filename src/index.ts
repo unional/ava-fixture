@@ -143,17 +143,17 @@ export default function fixture(ava: typeof test, path: string): FixtureTest {
           let result: any;
           const cwd = process.cwd();
           try {
-            process.chdir(fixturePath)
+            process.chdir(fixturePath);
             result = run(t, fixturePath);
             if (result && result.then) {
               return result.then((r: any) => {
                 process.chdir(cwd);
                 return r;
-              })
+              });
             }
           }
           finally {
-            process.chdir(cwd)
+            process.chdir(cwd);
           }
         });
       }) as any;
