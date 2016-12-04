@@ -149,7 +149,7 @@ export interface FixtureTest extends FixtureContextualTestFunction {
  * Creates fixture test.
  * `cwd` is set to the case directory during the test.
  * @param ava The ava module function (`import ava from 'ava'`).
- * @param path Absolute or relative path to the fixture cases parent directory.
+ * @param path Absolute or relative path to the fixture cases parent directory. In ava@0.17, cwd for relative path is set to the project root, instead of test file location.
  */
 export default function fixture(ava: typeof test, path: string): FixtureTest {
   function curry<T>(testfn: (name: string, run: any) => any): T {

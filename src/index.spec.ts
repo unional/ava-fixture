@@ -19,7 +19,7 @@ ftest('abs path', 'case-1', (t, path) => {
   return bluebird.resolve();
 });
 
-const rtest = fixture(ava, '../fixtures');
+const rtest = fixture(ava, './fixtures');
 
 rtest('relative path', 'case-1', (t, path) => {
   const filePath = join(path, 'somefile.txt');
