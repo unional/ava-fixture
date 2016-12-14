@@ -43,7 +43,7 @@
     "onchange": "^3.2.0",
     "rimraf": "^2.5.3",
     "tap-spec": "^4.1.1",
-    "ts-node": "1.7.0",
+    "ts-node": "^1.7.2",
     "tslint": "^4.0.2",
     "tslint-config-unional": "0.6.0",
     "typescript": "^2.0.0",
