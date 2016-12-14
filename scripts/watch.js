@@ -3,13 +3,17 @@
 const cp = require('child_process');
 
 let compiling = true;
-cp.spawn('tsc', ['-w'])
-  .stdout.on('data', data => {
-    console.log(data.toString())
+cp.spawn('tsc', ['-w'], { shell: true })
+  .stdout.on('data', () => {
     if (compiling) {
       compiling = false;
       cp.spawn('ava', ['-w', process.argv[2]], {
-        stdio: 'inherit'
+        stdio: 'inherit',
+        shell: true
       });
     }
+    cp.spawnSync('npm', ['run', 'lint'], {
+      stdio: 'inherit',
+      shell: true
+    })
   })

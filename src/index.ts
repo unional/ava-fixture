@@ -1,4 +1,4 @@
-import { resolve } from 'path';
+import { resolve, relative } from 'path';
 import test, {
   Test,
   ContextualTestContext,
@@ -40,11 +40,11 @@ export namespace Ava {
   }
 }
 
-export type FixtureContextualTest = (t: ContextualTestContext, path: string) => PromiseLike<void> | Iterator<any> | Observable | void;
+export type FixtureContextualTest = (t: ContextualTestContext, absolutePath: string, relativePath: string) => PromiseLike<any> | Iterator<any> | Observable | void;
 
-export type FixtureContextualSerialTest = (t: ContextualTestContext, path: string) => void;
+export type FixtureContextualSerialTest = (t: ContextualTestContext, absolutePath: string, relativePath: string) => void;
 
-export type FixtureContextualCallbackTest = (t: ContextualCallbackTestContext, path: string) => void;
+export type FixtureContextualCallbackTest = (t: ContextualCallbackTestContext, absolutePath: string, relativePath: string) => void;
 
 export interface BeforeRunner {
   (title: string, run: Test): void;
@@ -114,8 +114,6 @@ export interface FixtureCallbackRunner extends FixtureContextualTestFunction {
   cb: FixtureCallbackRunner;
 }
 
-
-
 export interface FixtureTest extends FixtureContextualTestFunction {
 
   // before, after, beforeEach, afterEach, skip, only
@@ -129,11 +127,11 @@ export interface FixtureTest extends FixtureContextualTestFunction {
 
   todo(title: string): void;
 
-  only(title: string, caseName: string, run: (t: ContextualTestContext, path: string) => any): void;
-  only(caseName: string, run: (t: ContextualTestContext, path: string) => any): void;
+  only(title: string, caseName: string, run: (t: ContextualTestContext, absolutePath: string, relativePath: string) => any): void;
+  only(caseName: string, run: (t: ContextualTestContext, absolutePath: string, relativePath: string) => any): void;
 
-  skip(title: string, caseName: string, run: (t: ContextualTestContext, path: string) => any): void;
-  skip(caseName: string, run: (t: ContextualTestContext, path: string) => any): void;
+  skip(title: string, caseName: string, run: (t: ContextualTestContext, absolutePath: string, relativePath: string) => any): void;
+  skip(caseName: string, run: (t: ContextualTestContext, absolutePath: string, relativePath: string) => any): void;
 
   after(title: string, run: (t: ContextualTestContext) => void): void;
   after(run: (t: ContextualTestContext) => void): void;
@@ -156,7 +154,7 @@ export default function fixture(ava: typeof test, path: string): FixtureTest {
     return ((
       title: string,
       caseName: string,
-      run: (t: ContextualTestContext, path: string) => any
+      run: (t: ContextualTestContext, absolutePath: string, relativePath: string) => any
     ) => {
       if (!run) {
         // name is optional
@@ -170,7 +168,7 @@ export default function fixture(ava: typeof test, path: string): FixtureTest {
         const cwd = process.cwd();
         try {
           process.chdir(fixturePath);
-          result = run(t, fixturePath);
+          result = run(t, fixturePath, relative(cwd, fixturePath));
           if (result && result.then) {
             return result.then((r: any) => {
               process.chdir(cwd);
