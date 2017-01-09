@@ -3,7 +3,7 @@ import { existsSync } from 'fs';
 import ava from 'ava';
 import bluebird = require('bluebird');
 
-import fixture from './index';
+import fixture from './fixture';
 
 // this is used by last test.
 const cwd = process.cwd();
@@ -33,11 +33,11 @@ ftest('case-1', (t, path) => {
 });
 
 // `test.only` test needs to be commented out so other tests can run. :)
-// test.only('only test', 'case-1', t => {
+// ftest.only('only test', 'case-1', t => {
 //   t.pass('only works');
 // });
 
-// test.only('case-1', t => {
+// ftest.only('case-1', t => {
 //   t.pass('only without title works.');
 // });
 

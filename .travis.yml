@@ -8,5 +8,11 @@ notifications:
 node_js:
   - "stable"
 
-after_script:
+before_install:
+  - npm install -g npm
+
+script:
   - npm run verify
+
+after_script:
+  - npm install coveralls && npm run coveralls

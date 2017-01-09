@@ -13,6 +13,7 @@ lib-cov
 
 # Coverage directory used by tools like istanbul
 coverage
+.nyc_output
 
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
@@ -24,7 +25,6 @@ coverage
 build/Release
 
 # Dependency directory
-bower_components
 jspm_packages
 node_modules
 
@@ -40,5 +40,5 @@ node_modules
 # typings
 typings
 
-# output folder
+# project folders
 dist

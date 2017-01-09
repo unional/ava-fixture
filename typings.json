@@ -1,9 +1,2 @@
 {
-  "name": "ava-fixture",
-  "globalDevDependencies": {
-    "node": "registry:env/node#6.0.0+20160813135048"
-  },
-  "devDependencies": {
-    "bluebird": "registry:npm/bluebird#3.4.1+20160811213708"
-  }
 }
