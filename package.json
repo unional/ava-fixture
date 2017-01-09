@@ -30,6 +30,10 @@
   "bugs": {
     "url": "https://github.com/unional/ava-fixture/issues"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/unional/ava-fixture.git"
+  },
   "license": "MIT",
   "keywords": [
     "ava",
