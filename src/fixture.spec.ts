@@ -2,15 +2,21 @@ import { join } from 'path'
 import { existsSync } from 'fs'
 import ava from 'ava'
 import bluebird = require('bluebird')
+import { getLogger } from 'aurelia-logging'
 
-import fixture from './fixture'
+import fixture from './index'
 
 // this is used by last test.
 const cwd = process.cwd()
-
+const logger = getLogger('fixture:spec')
 const ftest = fixture(ava, join(process.env.PWD, 'fixtures'))
 
 ftest('abs path', 'case-1', (t, path) => {
+  const localCwd = process.cwd()
+  logger.debug('abs path, case-1')
+  logger.debug(`outer cwd: ${cwd}`)
+  logger.debug(`local cwd: ${localCwd}`)
+  logger.debug(`cb(*, path): ${path}`)
   const filePath = join(path, 'somefile.txt')
   t.plan(1)
   t.true(existsSync(filePath), 'should find somefile.txt')

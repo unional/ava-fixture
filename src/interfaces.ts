@@ -5,11 +5,14 @@ import test, {
   Observable
 } from 'ava'
 
-export type FixtureContextualTest = (t: ContextualTestContext, absolutePath: string, relativePath: string) => PromiseLike<any> | Iterator<any> | Observable | void
+/**
+ * The fixture text context (the callback function).
+ */
+export type FixtureContextualTest = (t: ContextualTestContext, cwd: string) => PromiseLike<any> | Iterator<any> | Observable | void
 
-export type FixtureContextualSerialTest = (t: ContextualTestContext, absolutePath: string, relativePath: string) => void
+export type FixtureContextualSerialTest = (t: ContextualTestContext, cwd: string) => void
 
-export type FixtureContextualCallbackTest = (t: ContextualCallbackTestContext, absolutePath: string, relativePath: string) => void
+export type FixtureContextualCallbackTest = (t: ContextualCallbackTestContext, cwd: string) => void
 
 export interface BeforeRunner {
   (title: string, run: Test): void
@@ -28,6 +31,7 @@ export interface FixtureContextualTestFunction {
    * @param title Title of the test (for display and filtering).
    * @param caseName Name of the test case, matching the folder under `path`.
    * @param run The test function.
+   * In this function, `cwd` is the fixture case folder.
    */
   (title: string, caseName: string, run: FixtureContextualTest): void
   /**
@@ -92,11 +96,11 @@ export interface FixtureTest extends FixtureContextualTestFunction {
 
   todo(title: string): void
 
-  only(title: string, caseName: string, run: (t: ContextualTestContext, absolutePath: string, relativePath: string) => any): void
-  only(caseName: string, run: (t: ContextualTestContext, absolutePath: string, relativePath: string) => any): void
+  only(title: string, caseName: string, run: (t: ContextualTestContext, cwd: string) => any): void
+  only(caseName: string, run: (t: ContextualTestContext, cwd: string) => any): void
 
-  skip(title: string, caseName: string, run: (t: ContextualTestContext, absolutePath: string, relativePath: string) => any): void
-  skip(caseName: string, run: (t: ContextualTestContext, absolutePath: string, relativePath: string) => any): void
+  skip(title: string, caseName: string, run: (t: ContextualTestContext, cwd: string) => any): void
+  skip(caseName: string, run: (t: ContextualTestContext, cwd: string) => any): void
 
   after(title: string, run: (t: ContextualTestContext) => void): void
   after(run: (t: ContextualTestContext) => void): void
