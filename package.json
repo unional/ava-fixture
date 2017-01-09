@@ -1,7 +1,7 @@
 {
   "name": "ava-fixture",
   "description": "Write fixture tests with ava",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "main": "dist/commonjs/index.js",
   "typings": "dist/commonjs/index.d.ts",
   "files": [
