@@ -60,6 +60,7 @@
     "ava": ">=0.17.0"
   },
   "devDependencies": {
+    "@types/node": "^6.0.58",
     "aurelia-logging-color": "^0.2.0",
     "aurelia-polyfills": "^1.1.1",
     "ava": "^0.17.0",
