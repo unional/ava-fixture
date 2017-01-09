@@ -21,33 +21,33 @@ import {
 
 export namespace Ava {
   export interface ContextualTestFunction {
-    (name: string, run: ContextualTest): void;
-    (run: ContextualTest): void;
+    (name: string, run: ContextualTest): void
+    (run: ContextualTest): void
   }
 
   export interface TestFunction {
-    (name: string, implementation: Test): void;
-    (implementation: Test): void;
+    (name: string, implementation: Test): void
+    (implementation: Test): void
   }
 
   export interface ContextualCallbackTestFunction {
-    (name: string, run: ContextualCallbackTest): void;
-    (run: ContextualCallbackTest): void;
+    (name: string, run: ContextualCallbackTest): void
+    (run: ContextualCallbackTest): void
   }
 
   export interface Test extends ContextualTestFunction {
-    before: ContextualTestFunction;
-    after: ContextualTestFunction;
-    beforeEach: TestFunction;
-    afterEach: TestFunction;
+    before: ContextualTestFunction
+    after: ContextualTestFunction
+    beforeEach: TestFunction
+    afterEach: TestFunction
 
-    skip: ContextualTestFunction;
-    only: ContextualTestFunction;
+    skip: ContextualTestFunction
+    only: ContextualTestFunction
 
-    serial: ContextualTestFunction;
-    failing: ContextualCallbackTestFunction;
-    cb: ContextualCallbackTestFunction;
-    todo(name: string): void;
+    serial: ContextualTestFunction
+    failing: ContextualCallbackTestFunction
+    cb: ContextualCallbackTestFunction
+    todo(name: string): void
   }
 }
 
@@ -66,32 +66,32 @@ export default function fixture(ava: typeof test, path: string): FixtureTest {
     ) => {
       if (!run) {
         // name is optional
-        run = caseName as any;
-        caseName = title;
+        run = caseName as any
+        caseName = title
       }
 
-      const fixturePath = resolve(path, caseName);
+      const fixturePath = resolve(path, caseName)
       return testfn(`${title ? title + ' ' : ''}(fixture: ${caseName})`, (t: any) => {
-        let result: any;
-        const cwd = process.cwd();
+        let result: any
+        const cwd = process.cwd()
         try {
-          process.chdir(fixturePath);
-          result = run(t, fixturePath, relative(cwd, fixturePath));
+          process.chdir(fixturePath)
+          result = run(t, fixturePath, relative(cwd, fixturePath))
           if (result && result.then) {
             return result.then((r: any) => {
-              process.chdir(cwd);
-              return r;
-            });
+              process.chdir(cwd)
+              return r
+            })
           }
         }
         finally {
-          process.chdir(cwd);
+          process.chdir(cwd)
         }
-      });
-    }) as any;
+      })
+    }) as any
   }
 
-  let fn = curry<FixtureContextualTestFunction>(ava);
+  let fn = curry<FixtureContextualTestFunction>(ava)
 
   let others = {
     only: curry<FixtureContextualTestFunction>(ava.only),
@@ -104,11 +104,11 @@ export default function fixture(ava: typeof test, path: string): FixtureTest {
     beforeEach: ava.beforeEach,
     after: ava.after,
     afterEach: ava.afterEach
-  };
-
-  for (let key in others) {
-    (fn as any)[key] = (others as any)[key];
   }
 
-  return fn as FixtureTest; // fn as typeof fn & typeof others;
+  for (let key in others) {
+    (fn as any)[key] = (others as any)[key]
+  }
+
+  return fn as FixtureTest // fn as typeof fn & typeof others
 }

@@ -2,24 +2,24 @@ import test, {
   Test,
   ContextualTestContext,
   ContextualCallbackTestContext,
-  Observable,
-} from 'ava';
+  Observable
+} from 'ava'
 
-export type FixtureContextualTest = (t: ContextualTestContext, absolutePath: string, relativePath: string) => PromiseLike<any> | Iterator<any> | Observable | void;
+export type FixtureContextualTest = (t: ContextualTestContext, absolutePath: string, relativePath: string) => PromiseLike<any> | Iterator<any> | Observable | void
 
-export type FixtureContextualSerialTest = (t: ContextualTestContext, absolutePath: string, relativePath: string) => void;
+export type FixtureContextualSerialTest = (t: ContextualTestContext, absolutePath: string, relativePath: string) => void
 
-export type FixtureContextualCallbackTest = (t: ContextualCallbackTestContext, absolutePath: string, relativePath: string) => void;
+export type FixtureContextualCallbackTest = (t: ContextualCallbackTestContext, absolutePath: string, relativePath: string) => void
 
 export interface BeforeRunner {
-  (title: string, run: Test): void;
-  (run: Test): void;
-  skip: FixtureRunner;
-  cb: FixtureCallbackRunner;
+  (title: string, run: Test): void
+  (run: Test): void
+  skip: FixtureRunner
+  cb: FixtureCallbackRunner
 }
 
 export interface AfterRunner extends BeforeRunner {
-  always: BeforeRunner;
+  always: BeforeRunner
 }
 
 export interface FixtureContextualTestFunction {
@@ -29,13 +29,13 @@ export interface FixtureContextualTestFunction {
    * @param caseName Name of the test case, matching the folder under `path`.
    * @param run The test function.
    */
-  (title: string, caseName: string, run: FixtureContextualTest): void;
+  (title: string, caseName: string, run: FixtureContextualTest): void
   /**
    * Runs a fixture test.
    * @param caseName Name of the test case, matching the folder under `path`.
    * @param run The test function.
    */
-  (caseName: string, run: FixtureContextualTest): void;
+  (caseName: string, run: FixtureContextualTest): void
 }
 
 export interface FixtureContextualSerialTestFunction {
@@ -45,13 +45,13 @@ export interface FixtureContextualSerialTestFunction {
    * @param caseName Name of the test case, matching the folder under `path`.
    * @param run The test function.
    */
-  (title: string, caseName: string, run: FixtureContextualSerialTest): void;
+  (title: string, caseName: string, run: FixtureContextualSerialTest): void
   /**
    * Runs a fixture test.
    * @param caseName Name of the test case, matching the folder under `path`.
    * @param run The test function.
    */
-  (caseName: string, run: FixtureContextualSerialTest): void;
+  (caseName: string, run: FixtureContextualSerialTest): void
 }
 
 export interface FixtureContextualCallbackTestFunction {
@@ -61,49 +61,49 @@ export interface FixtureContextualCallbackTestFunction {
    * @param caseName Name of the test case, matching the folder under `path`.
    * @param run The test function.
    */
-  (title: string, caseName: string, run: FixtureContextualCallbackTest): void;
+  (title: string, caseName: string, run: FixtureContextualCallbackTest): void
   /**
    * Runs a fixture test.
    * @param caseName Name of the test case, matching the folder under `path`.
    * @param run The test function.
    */
-  (caseName: string, run: FixtureContextualCallbackTest): void;
+  (caseName: string, run: FixtureContextualCallbackTest): void
 }
 
 export interface FixtureRunner extends FixtureContextualTestFunction {
-  skip: FixtureRunner;
-  cb: FixtureCallbackRunner;
+  skip: FixtureRunner
+  cb: FixtureCallbackRunner
 }
 
 export interface FixtureCallbackRunner extends FixtureContextualTestFunction {
-  cb: FixtureCallbackRunner;
+  cb: FixtureCallbackRunner
 }
 
 export interface FixtureTest extends FixtureContextualTestFunction {
 
   // before, after, beforeEach, afterEach, skip, only
-  before: BeforeRunner;
+  before: BeforeRunner
 
-  serial: FixtureContextualSerialTestFunction;
+  serial: FixtureContextualSerialTestFunction
 
-  failing: FixtureContextualCallbackTestFunction;
+  failing: FixtureContextualCallbackTestFunction
 
-  cb: FixtureContextualCallbackTestFunction;
+  cb: FixtureContextualCallbackTestFunction
 
-  todo(title: string): void;
+  todo(title: string): void
 
-  only(title: string, caseName: string, run: (t: ContextualTestContext, absolutePath: string, relativePath: string) => any): void;
-  only(caseName: string, run: (t: ContextualTestContext, absolutePath: string, relativePath: string) => any): void;
+  only(title: string, caseName: string, run: (t: ContextualTestContext, absolutePath: string, relativePath: string) => any): void
+  only(caseName: string, run: (t: ContextualTestContext, absolutePath: string, relativePath: string) => any): void
 
-  skip(title: string, caseName: string, run: (t: ContextualTestContext, absolutePath: string, relativePath: string) => any): void;
-  skip(caseName: string, run: (t: ContextualTestContext, absolutePath: string, relativePath: string) => any): void;
+  skip(title: string, caseName: string, run: (t: ContextualTestContext, absolutePath: string, relativePath: string) => any): void
+  skip(caseName: string, run: (t: ContextualTestContext, absolutePath: string, relativePath: string) => any): void
 
-  after(title: string, run: (t: ContextualTestContext) => void): void;
-  after(run: (t: ContextualTestContext) => void): void;
+  after(title: string, run: (t: ContextualTestContext) => void): void
+  after(run: (t: ContextualTestContext) => void): void
 
-  beforeEach(title: string, run: (t: ContextualTestContext) => void): void;
-  beforeEach(run: (t: ContextualTestContext) => void): void;
+  beforeEach(title: string, run: (t: ContextualTestContext) => void): void
+  beforeEach(run: (t: ContextualTestContext) => void): void
 
-  afterEach(title: string, run: (t: ContextualTestContext) => void): void;
-  afterEach(run: (t: ContextualTestContext) => void): void;
+  afterEach(title: string, run: (t: ContextualTestContext) => void): void
+  afterEach(run: (t: ContextualTestContext) => void): void
 }
