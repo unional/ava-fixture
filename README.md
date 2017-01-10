@@ -47,6 +47,11 @@ ftest('test title', 'case-1', (t) => {
 
   // ...test away
 });
+
+// test title can be omitted
+ftest('case-1', (t) => {
+  // ...
+})
 ```
 
 When you want to perform baseline tests:
@@ -68,6 +73,11 @@ btest('test title', 'case-1', (t, d) => {
   // `d.match()` will check if the result folder has the same content as the baseline folder.
   return d.match()
 });
+
+// test title can be omitted
+btest('case-1', (t) => {
+  // ...
+})
 ```
 
 ## Other API
