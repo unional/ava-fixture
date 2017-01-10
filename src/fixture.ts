@@ -5,9 +5,8 @@ import test, {
 
 import {
   ContextualDiffContext,
-  FixtureContextualTestFunction,
-  FixtureBaselineTest,
-  FixtureTest
+  fixtureTest,
+  baselineTest
 } from './interfaces'
 
 import { curryMatch } from './curryMatch'
@@ -20,8 +19,8 @@ import { curryMatch } from './curryMatch'
  * @param baselinesPath Absolute or relative path (from project root) to the fixture baselines parent directory.
  * @param resultsPath Absolute or relative path (from project root) to the fixture results parent directory.
  */
-export function fixture(ava: typeof test, casesPath: string, baselinesPath: string, resultsPath: string): FixtureBaselineTest
-export function fixture(ava: typeof test, casesPath: string): FixtureTest
+export function fixture(ava: typeof test, casesPath: string, baselinesPath: string, resultsPath: string): typeof baselineTest
+export function fixture(ava: typeof test, casesPath: string): typeof fixtureTest
 export function fixture(ava: typeof test, casesPath: string, baselinesPath?: string, resultsPath?: string) {
   if (baselinesPath && !resultsPath) {
     throw new Error('baselines and results must be specified together')
@@ -69,12 +68,12 @@ export function fixture(ava: typeof test, casesPath: string, baselinesPath?: str
     }) as any
   }
 
-  let fn: any = curry<FixtureContextualTestFunction>(ava)
+  let fn: any = curry(ava)
 
   let others = {
-    failing: curry<FixtureContextualTestFunction>(ava.failing),
-    only: curry<FixtureContextualTestFunction>(ava.only),
-    skip: curry<FixtureContextualTestFunction>(ava.skip),
+    failing: curry(ava.failing),
+    only: curry(ava.only),
+    skip: curry(ava.skip),
     todo: ava.todo
   }
 
