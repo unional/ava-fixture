@@ -82,9 +82,17 @@ export function fixture(ava: typeof test, casesPath: string, baselinesPath?: str
   }
 
   fn.failing.only = others.only
+  fn.failing.only.skip = others.skip
   fn.failing.skip = others.skip
+  fn.failing.skip.only = others.only
   fn.only.failing = others.failing
+  fn.only.failing.skip = others.skip
+  fn.only.skip = others.skip
+  fn.only.skip.failing = others.failing
   fn.skip.failing = others.failing
+  fn.skip.failing.only = others.only
+  fn.skip.only = others.only
+  fn.skip.only.failing = others.failing
 
   return fn
 }

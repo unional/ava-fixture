@@ -57,7 +57,8 @@
     "exclude": [
       "scripts",
       "**/*.spec.*",
-      "**/fixtures/**/*"
+      "**/fixtures/**/*",
+      "dist/spec/interfaces.js"
     ]
   },
   "peerDependencies": {
