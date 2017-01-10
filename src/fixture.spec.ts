@@ -11,6 +11,16 @@ logger.debug('starting fixture.spec')
 
 const ftest = fixture(ava, join(process.env.PWD, 'fixtures/cases'))
 
+ava('shape test', t => {
+  t.truthy(ftest.only)
+  t.truthy(ftest.failing)
+  t.truthy(ftest.skip)
+  // t.truthy(ftest.failing.only)
+  // t.truthy(ftest.failing.skip)
+  // t.truthy(ftest.only.failing)
+  // t.truthy(ftest.skip.failing)
+})
+
 ftest('abs path', 'case-1', (t, d) => {
   const localCwd = process.cwd()
   logger.debug('abs path, case-1')

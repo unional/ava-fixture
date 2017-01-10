@@ -14,11 +14,7 @@ ava('baseline and result must be specified together', t => {
 
 const btest = fixture(ava, 'fixtures/cases', 'fixtures/baselines', 'fixtures/results')
 
-// d.match() uses `t` internally and when t fails, it stops
-// the process instead of just throw error.
-// Thus I can't catch the error with `t.throws()` and it this pass.
-// Using `t` inside `match()` is desirable to benefit from `power-assert`
-btest.skip('case-1', (t, d) => {
+btest.failing('case-1', (t, d) => {
   // no api to ease read file as the actual test target should be doing it.
   const file = readFileSync(resolve(d.casePath, 'somefile.txt')).toString()
 

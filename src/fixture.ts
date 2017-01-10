@@ -69,9 +69,10 @@ export function fixture(ava: typeof test, casesPath: string, baselinesPath?: str
     }) as any
   }
 
-  let fn = curry<FixtureContextualTestFunction>(ava)
+  let fn: any = curry<FixtureContextualTestFunction>(ava)
 
   let others = {
+    failing: curry<FixtureContextualTestFunction>(ava.failing),
     only: curry<FixtureContextualTestFunction>(ava.only),
     skip: curry<FixtureContextualTestFunction>(ava.skip),
     todo: ava.todo
@@ -80,6 +81,11 @@ export function fixture(ava: typeof test, casesPath: string, baselinesPath?: str
   for (let key in others) {
     (fn as any)[key] = (others as any)[key]
   }
+
+  fn.failing.only = others.only
+  fn.failing.skip = others.skip
+  fn.only.failing = others.failing
+  fn.skip.failing = others.failing
 
   return fn
 }

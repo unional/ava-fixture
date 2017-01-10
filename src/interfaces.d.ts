@@ -83,6 +83,23 @@ export interface FixtureCallbackRunner extends FixtureContextualTestFunction {
   cb: FixtureCallbackRunner
 }
 
+// export namespace FixtureBaselineTest.failing {
+//     export function only(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineDiffContext) => any): void
+//     export function only(caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineDiffContext) => any): void
+
+//     export function skip(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineDiffContext) => any): void
+//     export function skip(caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineDiffContext) => any): void
+// }
+// export namespace FixtureBaselineTest.only {
+//     export function failing(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineDiffContext) => any): void
+//     export function failing(caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineDiffContext) => any): void
+// }
+
+// export namespace FixtureBaselineTest.skip {
+//     export function failing(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineDiffContext) => any): void
+//     export function failing(caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineDiffContext) => any): void
+// }
+
 export interface FixtureBaselineTest extends FixtureContextualBaselineTestFunction {
   todo(title: string): void
 
@@ -96,9 +113,30 @@ export interface FixtureBaselineTest extends FixtureContextualBaselineTestFuncti
 export interface FixtureTest extends FixtureContextualTestFunction {
   todo(title: string): void
 
+  failing(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+  failing(caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+
   only(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
   only(caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
 
   skip(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
   skip(caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
 }
+
+// export namespace FixtureTest.failing {
+//     export function only(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+//     export function only(caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+
+//     export function skip(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+//     export function skip(caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+// }
+
+// export namespace FixtureTest.only {
+//     export function failing(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+//     export function failing(caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+// }
+
+// export namespace FixtureTest.skip {
+//     export function failing(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+//     export function failing(caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+// }
