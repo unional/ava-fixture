@@ -1,5 +1,4 @@
 import {
-  Test,
   ContextualCallbackTest,
   ContextualTest,
   ContextualTestContext,
