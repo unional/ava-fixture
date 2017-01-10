@@ -13,6 +13,8 @@
     "moduleResolution": "node",
     "newLine": "LF",
     "noImplicitAny": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": false,
     "removeComments": false,
     "sourceMap": true,
     "sourceRoot": "/ava-fixture",

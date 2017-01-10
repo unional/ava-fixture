@@ -1,10 +1,10 @@
-import { join, resolve } from 'path'
-import { existsSync, readFileSync, writeFileSync } from 'fs'
+import { join } from 'path'
+import { existsSync } from 'fs'
 import ava from 'ava'
 import bluebird = require('bluebird')
 import { getLogger } from 'aurelia-logging'
 
-import fixture, { fixtureDefaultOptions } from './index'
+import fixture from './index'
 
 const logger = getLogger('fixture:spec')
 logger.debug('starting fixture.spec')
@@ -51,26 +51,6 @@ ftest.skip('skip test', 'case-1', t => {
 
 ftest.skip('case-1', t => {
   t.pass('skip without title works.')
-})
-
-ftest.serial('serial', 'case-1', t => {
-  t.pass('serial works.')
-})
-
-ftest.serial('case-1', t => {
-  t.pass('serial without title works.')
-})
-
-ftest.todo('todo test')
-
-ftest.cb('cb', 'case-1', t => {
-  t.pass('cb works.')
-  t.end()
-})
-
-ftest.cb('case-1', t => {
-  t.pass('cb without title works.')
-  t.end()
 })
 
 // this is used by last test.

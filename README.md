@@ -9,55 +9,80 @@ Helps you to easily write fixture tests with [`ava`](https://github.com/avajs/av
 
 ## What is Fixture Test
 
-Fixture tests are tests that require access to some files. The tests may write files and in that case the files can be compared with a baseline (i.e. Baseline Tests)
+Fixture tests are tests that require access to some files.
+The tests may write files and in that case the files can be compared with a baseline (i.e. Baseline Tests)
 
 ## Usage
+
+Assume you have the following folders:
+
+```sh
++ fixtures
+  + cases
+    + case-1
+      - something.txt
+    + other-cases
+  + baselines
+    + case-1
+      - something.txt
+  + results # empty, not check into repository
+```
+
+When you only need to access files in each test case (i.e. don't need to perform baseline test):
 
 ```ts
 import ava from 'ava';
 import fixture from 'ava-fixture';
 
 // Point to the base folder which contain the fixtures.
-const ftest = fixture(ava, '../fixture/cases');
+// Relative path starts from project root.
+const ftest = fixture(ava, 'fixture/cases');
 
 // You can also use absolute path.
-// const ftest = fixture(ava, join(process.env.PWD, 'fixture/cases'));
+// const ftest = fixture(ava, join(process.cwd(), 'fixture/cases'));
 
-ftest('test title', 'fixture-name', (t, path) => {
+ftest('test title', 'case-1', (t) => {
   // t is ava test.
-  // path is the path to the fixture-name folder.
+  // process.cwd() points to `case-1`
+
   // ...test away
 });
 ```
 
-## API
+When you want to perform baseline tests:
 
-typings is available so just follow the code completion.
+```ts
+import test from 'ava';
+import fixture from 'ava-fixture';
 
-### `fixture(ava: Ava.Test, absOrRelativePath: string): FixtureTest`
+// Point to the base folder which contain the fixtures.
+// Relative path starts from project root.
+const btest = fixture(test, 'fixture/cases', 'fixture/baselines', 'fixture/results');
 
-### `fixtureTest([title], caseName, (t, casePath) => Promise<any> | void): void`
+btest('test title', 'case-1', (t, d) => {
+  // t is ava test.
+  // process.cwd() points to `case-1`
+  // d.casePath, d.baselinePath, d.resultPath points to respective folder for `case-1`
+  // ...do tests
 
-### `fixtureTest.serial([title], caseName, (t, casePath) => Promise<any> | void): void`
+  // `d.match()` will check if the result folder has the same content as the baseline folder.
+  return d.match()
+});
+```
 
-### `fixtureTest.cb([title], caseName, (t, casePath) => Promise<any> | void): void`
+## Other API
 
-### `fixtureTest.only([title], caseName, (t, casePath) => Promise<any> | void): void`
+```ts
+import test from 'ava';
+import fixture from 'ava-fixture';
 
-### `fixtureTest.skip([title], caseName, (t, casePath) => Promise<any> | void): void`
+const ftest = fixture(test, 'fixture/cases');
 
-### `fixtureTest.todo([title: string], caseName: string): void`
+ftest.only(...)
+ftest.skip(...)
+```
 
-### `fixtureTest.failing([title], caseName, (t, casePath) => Promise<any> | void): void`
-
-### `fixtureTest.before([title], caseName, (t, casePath) => Promise<any> | void): void`
-
-### `fixtureTest.after([title], caseName, (t, casePath) => Promise<any> | void): void`
-
-### `fixtureTest.beforeEach([title], caseName, (t, casePath) => Promise<any> | void): void`
-
-### `fixtureTest.afterEach([title], caseName, (t, casePath) => Promise<any> | void): void`
-
+For `before()`, `beforeEach()`, `after()`, `afterEach()`, `todo()`, use `ava` directly.
 
 ## Contribute
 

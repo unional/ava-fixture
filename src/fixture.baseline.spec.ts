@@ -1,14 +1,18 @@
 import ava from 'ava'
-import { join, resolve } from 'path'
-import { existsSync, readFileSync, writeFileSync } from 'fs'
+import { resolve } from 'path'
+import { readFileSync, writeFileSync } from 'fs'
 import * as mkdirp from 'mkdirp'
 import { getLogger } from 'aurelia-logging'
-import fixture, { fixtureDefaultOptions } from './index'
+import fixture from './index'
 
 const log = getLogger('fixture:baseline:spec')
 log.debug('starting fixture.baseline.spec')
 
-const btest = fixture(ava, 'fixtures', fixtureDefaultOptions)
+ava('baseline and result must be specified together', t => {
+  t.throws(() => (fixture as any)(ava, 'x', 'y'))
+})
+
+const btest = fixture(ava, 'fixtures/cases', 'fixtures/baselines', 'fixtures/results')
 
 // d.match() uses `t` internally and when t fails, it stops
 // the process instead of just throw error.

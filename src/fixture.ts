@@ -1,68 +1,16 @@
-import { join, resolve, relative } from 'path'
+import { resolve } from 'path'
 import test, {
-  ContextualTestContext,
-  ContextualCallbackTest,
-  ContextualTest
+  ContextualTestContext
 } from 'ava'
 
 import {
-  AfterRunner,
-  BeforeRunner,
-  ContextualBaselineDiffContext,
   ContextualDiffContext,
-  FixtureCallbackRunner,
-  FixtureContextualCallbackTest,
-  FixtureContextualCallbackTestFunction,
-  FixtureContextualSerialTest,
-  FixtureContextualSerialTestFunction,
-  FixtureContextualBaselineTest,
-  FixtureContextualTest,
   FixtureContextualTestFunction,
-  FixtureOptions,
-  FixtureRunner,
   FixtureBaselineTest,
   FixtureTest
 } from './interfaces'
 
 import { curryMatch } from './curryMatch'
-
-namespace Ava {
-  export interface ContextualTestFunction {
-    (name: string, run: ContextualTest): void
-    (run: ContextualTest): void
-  }
-
-  export interface TestFunction {
-    (name: string, implementation: Test): void
-    (implementation: Test): void
-  }
-
-  export interface ContextualCallbackTestFunction {
-    (name: string, run: ContextualCallbackTest): void
-    (run: ContextualCallbackTest): void
-  }
-
-  export interface Test extends ContextualTestFunction {
-    before: ContextualTestFunction
-    after: ContextualTestFunction
-    beforeEach: TestFunction
-    afterEach: TestFunction
-
-    skip: ContextualTestFunction
-    only: ContextualTestFunction
-
-    serial: ContextualTestFunction
-    failing: ContextualCallbackTestFunction
-    cb: ContextualCallbackTestFunction
-    todo(name: string): void
-  }
-}
-
-export const fixtureDefaultOptions: FixtureOptions = {
-  casesPath: 'cases',
-  baselinesPath: 'baselines',
-  resultsPath: 'results'
-}
 
 /**
  * Creates fixture test.
@@ -70,9 +18,13 @@ export const fixtureDefaultOptions: FixtureOptions = {
  * @param ava The ava module function (`import ava from 'ava'`).
  * @param path Absolute or relative path to the fixture cases parent directory. In ava@0.17, cwd for relative path is set to the project root, instead of test file location.
  */
-export function fixture(ava: typeof test, path: string, options: FixtureOptions): FixtureBaselineTest
-export function fixture(ava: typeof test, path: string): FixtureTest
-export function fixture(ava: typeof test, path: string, options?: FixtureOptions) {
+export function fixture(ava: typeof test, casesPath: string, baselinesPath: string, resultsPath: string): FixtureBaselineTest
+export function fixture(ava: typeof test, casesPath: string): FixtureTest
+export function fixture(ava: typeof test, casesPath: string, baselinesPath?: string, resultsPath?: string) {
+  if (baselinesPath && !resultsPath) {
+    throw new Error('baselines and results must be specified together')
+  }
+
   function curry<T>(testfn: (name: string, run: any) => any): T {
     return ((
       title: string,
@@ -85,24 +37,20 @@ export function fixture(ava: typeof test, path: string, options?: FixtureOptions
         caseName = title
       }
 
-      let d
-      if (options) {
-        d = {
-          casePath: resolve(path, options.casesPath, caseName),
-          baselinePath: resolve(path, options.baselinesPath, caseName),
-          resultPath: resolve(path, options.resultsPath, caseName)
-        }
+      let d: any = {
+        casePath: resolve(casesPath, caseName)
       }
-      else {
+      if (baselinesPath) {
         d = {
-          casePath: resolve(path, caseName)
+          baselinePath: resolve(baselinesPath, caseName),
+          resultPath: resolve(resultsPath, caseName)
         }
       }
       return testfn(`${title ? title + ' ' : ''}(fixture: ${caseName})`, (t: ContextualTestContext) => {
         let result: any
         const cwd = process.cwd()
         try {
-          if (options) {
+          if (baselinesPath) {
             d.match = curryMatch(d.baselinePath, d.resultPath, t)
           }
           process.chdir(d.casePath)
@@ -126,19 +74,12 @@ export function fixture(ava: typeof test, path: string, options?: FixtureOptions
   let others = {
     only: curry<FixtureContextualTestFunction>(ava.only),
     skip: curry<FixtureContextualTestFunction>(ava.skip),
-    serial: curry<FixtureContextualSerialTestFunction>(ava.serial),
-    todo: ava.todo,
-    cb: curry<FixtureContextualCallbackTestFunction>(ava.cb),
-    failing: curry<FixtureContextualCallbackTestFunction>(ava.failing),
-    before: ava.before,
-    beforeEach: ava.beforeEach,
-    after: ava.after,
-    afterEach: ava.afterEach
+    todo: ava.todo
   }
 
   for (let key in others) {
     (fn as any)[key] = (others as any)[key]
   }
 
-  return fn as FixtureTest // fn as typeof fn & typeof others
+  return fn
 }
