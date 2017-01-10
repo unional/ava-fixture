@@ -103,6 +103,9 @@ export interface FixtureCallbackRunner extends FixtureContextualTestFunction {
 export interface FixtureBaselineTest extends FixtureContextualBaselineTestFunction {
   todo(title: string): void
 
+  failing(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineDiffContext) => any): void
+  failing(caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineDiffContext) => any): void
+
   only(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineDiffContext) => any): void
   only(caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineDiffContext) => any): void
 
