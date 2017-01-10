@@ -88,6 +88,7 @@ import fixture from 'ava-fixture';
 
 const ftest = fixture(test, 'fixture/cases');
 
+// Chainable: e.g. `ftest.only.skip.failing()`
 ftest.only(...)
 ftest.skip(...)
 ftest.failing(...)
