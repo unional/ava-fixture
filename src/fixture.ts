@@ -14,9 +14,11 @@ import { curryMatch } from './curryMatch'
 
 /**
  * Creates fixture test.
- * `cwd` is set to the case directory during the test.
+ * `cwd` will be set to the case directory during the test.
  * @param ava The ava module function (`import ava from 'ava'`).
- * @param path Absolute or relative path to the fixture cases parent directory. In ava@0.17, cwd for relative path is set to the project root, instead of test file location.
+ * @param casesPath Absolute or relative path (from project root) to the fixture cases parent directory.
+ * @param baselinesPath Absolute or relative path (from project root) to the fixture baselines parent directory.
+ * @param resultsPath Absolute or relative path (from project root) to the fixture results parent directory.
  */
 export function fixture(ava: typeof test, casesPath: string, baselinesPath: string, resultsPath: string): FixtureBaselineTest
 export function fixture(ava: typeof test, casesPath: string): FixtureTest
