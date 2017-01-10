@@ -1,5 +1,4 @@
-import { fixture, fixtureDefaultOptions } from './fixture'
+import { fixture } from './fixture'
 
 export default fixture
-export { fixtureDefaultOptions }
 export * from './interfaces'

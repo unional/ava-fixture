@@ -41,10 +41,8 @@ export function fixture(ava: typeof test, casesPath: string, baselinesPath?: str
         casePath: resolve(casesPath, caseName)
       }
       if (baselinesPath) {
-        d = {
-          baselinePath: resolve(baselinesPath, caseName),
-          resultPath: resolve(resultsPath, caseName)
-        }
+        d.baselinePath = resolve(baselinesPath, caseName)
+        d.resultPath = resolve(resultsPath, caseName)
       }
       return testfn(`${title ? title + ' ' : ''}(fixture: ${caseName})`, (t: ContextualTestContext) => {
         let result: any
