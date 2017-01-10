@@ -1,42 +1,8 @@
 import {
-  ContextualCallbackTest,
-  ContextualTest,
   ContextualTestContext,
   ContextualCallbackTestContext,
   Observable
 } from 'ava'
-
-export namespace Ava {
-  export interface ContextualTestFunction {
-    (name: string, run: ContextualTest): void
-    (run: ContextualTest): void
-  }
-
-  export interface TestFunction {
-    (name: string, implementation: Test): void
-    (implementation: Test): void
-  }
-
-  export interface ContextualCallbackTestFunction {
-    (name: string, run: ContextualCallbackTest): void
-    (run: ContextualCallbackTest): void
-  }
-
-  export interface Test extends ContextualTestFunction {
-    before: ContextualTestFunction
-    after: ContextualTestFunction
-    beforeEach: TestFunction
-    afterEach: TestFunction
-
-    skip: ContextualTestFunction
-    only: ContextualTestFunction
-
-    serial: ContextualTestFunction
-    failing: ContextualCallbackTestFunction
-    cb: ContextualCallbackTestFunction
-    todo(name: string): void
-  }
-}
 
 export interface ContextualDiffContext {
   /**
