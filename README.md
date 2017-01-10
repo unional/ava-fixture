@@ -90,6 +90,7 @@ const ftest = fixture(test, 'fixture/cases');
 
 ftest.only(...)
 ftest.skip(...)
+ftest.failing(...)
 ```
 
 For `before()`, `beforeEach()`, `after()`, `afterEach()`, `todo()`, use `ava` directly.
