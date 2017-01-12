@@ -17,7 +17,6 @@
     "noUnusedLocals": true,
     "noUnusedParameters": false,
     "removeComments": false,
-    "sourceMap": true,
     "sourceRoot": "/ava-fixture",
     "strictNullChecks": true,
     "target": "es5"
