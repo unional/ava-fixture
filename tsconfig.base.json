@@ -2,7 +2,7 @@
   "compilerOptions": {
     "declaration": true,
     "inlineSources": true,
-    "inlineSourceMap": true,
+    "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "lib": [
@@ -17,7 +17,6 @@
     "noUnusedLocals": true,
     "noUnusedParameters": false,
     "removeComments": false,
-    "sourceRoot": "/ava-fixture",
     "strictNullChecks": true,
     "target": "es5"
   }
