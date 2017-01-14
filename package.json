@@ -69,7 +69,7 @@
     "@types/mkdirp": "^0.3.29",
     "@types/node": "^6.0.58",
     "aurelia-logging": "^1.2.0",
-    "aurelia-logging-color": "^0.2.0",
+    "aurelia-logging-color": "^0.4.8",
     "aurelia-polyfills": "^1.1.1",
     "ava": "^0.17.0",
     "bluebird": "^3.4.7",
