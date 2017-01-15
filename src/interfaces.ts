@@ -25,7 +25,7 @@ export interface ContextualBaselineDiffContext extends ContextualDiffContext {
    * Check if the baseline folder and the result folder matches.
    * If not, error will be thrown.
    */
-  match(): Promise<any> | void
+  match(): Promise<any>
 }
 
 export type FixtureContextualBaselineTest = (t: ContextualTestContext, d: ContextualBaselineDiffContext) => PromiseLike<any> | Iterator<any> | Observable | void

@@ -34,9 +34,12 @@ ftest('abs path', 'case-1', (t, d) => {
   logger.debug('abs path, case-1')
   logger.debug(`outer cwd: ${cwd}`)
   logger.debug(`local cwd: ${localCwd}`)
-  const filePath = join(d.casePath, 'somefile.txt')
-  t.true(existsSync(filePath), 'should find somefile.txt')
-  t.is(localCwd, d.casePath, 'local cwd is the cases path')
+
+  // keep cwd since 0.8.0
+  t.is(localCwd, cwd)
+  process.chdir(d.casePath)
+  t.true(existsSync('somefile.txt'), 'should find somefile.txt')
+
   // make sure it works for custom promise libraries.
   return bluebird.resolve()
 })
@@ -44,14 +47,22 @@ ftest('abs path', 'case-1', (t, d) => {
 const rtest = fixture(ava, './fixtures/cases')
 
 rtest('relative path', 'case-1', (t, d) => {
-  const filePath = join(d.casePath, 'somefile.txt')
-  t.true(existsSync(filePath), 'should find somefile.txt')
-  t.is(process.cwd(), d.casePath, 'cwd set to case path.')
+  const localCwd = process.cwd()
+  logger.debug('abs path, case-1')
+  logger.debug(`outer cwd: ${cwd}`)
+  logger.debug(`local cwd: ${localCwd}`)
+
+  // keep cwd since 0.8.0
+  t.is(localCwd, cwd)
+  process.chdir(d.casePath)
+  t.true(existsSync('somefile.txt'), 'should find somefile.txt')
+
+  // make sure it works for custom promise libraries.
+  return bluebird.resolve()
 })
 
-ftest('case-1', (t, d) => {
+ftest('case-1', (t) => {
   t.pass('work without title.')
-  t.is(process.cwd(), d.casePath, 'cwd set to case path.')
 })
 
 // `test.only` test needs to be commented out so other tests can run. :)

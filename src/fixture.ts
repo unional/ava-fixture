@@ -52,7 +52,6 @@ export function fixture(ava: typeof test, casesPath: string, baselinesPath?: str
           if (baselinesPath) {
             d.match = curryMatch(d.baselinePath, d.resultPath, t)
           }
-          process.chdir(d.casePath)
           result = run(t, d)
           if (result && result.then) {
             return result.then((r: any) => {
