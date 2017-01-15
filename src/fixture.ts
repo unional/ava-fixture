@@ -83,7 +83,9 @@ export function fixture(ava: typeof test, casesPath: string, baselinesPath?: str
       run: FixtureContextualBaselineEachTest
     ) => {
       const absCasesPath = resolve(casesPath)
-      let dirs: string[] = readdirSync(absCasesPath).toString().split(',')
+
+      // readdirSync reads both files and directories.
+      let assets: string[] = readdirSync(absCasesPath).toString().split(',')
 
       if (!run) {
         // filter is optional
@@ -91,10 +93,10 @@ export function fixture(ava: typeof test, casesPath: string, baselinesPath?: str
       }
       else {
         const regex = filter instanceof RegExp ? filter : new RegExp(filter)
-        dirs = dirs.filter(d => regex.test(d))
+        assets = assets.filter(d => regex.test(d))
       }
 
-      const testResultPromises = dirs.map(caseName => {
+      const testResultPromises = assets.map(caseName => {
         const d: any = {
           caseName,
           casePath: join(absCasesPath, caseName)
