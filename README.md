@@ -44,16 +44,25 @@ const ftest = fixture(ava, 'fixture/cases');
 // You can also use absolute path.
 // const ftest = fixture(ava, join(process.cwd(), 'fixture/cases'));
 
-ftest('test title', 'case-1', (t) => {
-  // t is ava test.
-  // process.cwd() points to `case-1`
+ftest('test title', 'case-1', (t, d) => {
+  // t is ava test assertion.
+  t.is(d.casePath, 'path to the case')
+
+  // If you need `cwd` at the case path.
+  process.chdir(d.casePath)
 
   // ...test away
 });
 
 // test title can be omitted
-ftest('case-1', (t) => {
+ftest('case-1', (t, d) => {
   // ...
+})
+
+// go through each test
+ftest.each((t, d) => {
+  t.is(d.caseName, 'name of the case')
+  t.is(d.casePath, 'path to the case')
 })
 ```
 
@@ -68,9 +77,14 @@ import fixture from 'ava-fixture';
 const btest = fixture(test, 'fixture/cases', 'fixture/baselines', 'fixture/results');
 
 btest('test title', 'case-1', (t, d) => {
-  // t is ava test.
-  // process.cwd() points to `case-1`
-  // d.casePath, d.baselinePath, d.resultPath points to respective folder for `case-1`
+  // t is ava test assertion.
+  t.is(d.casePath, 'path to the case')
+  t.is(d.baselinePath, 'path to the baseline of the case')
+  t.is(d.resultPath, 'where you should put your result')
+
+  // If you need `cwd` at the case path.
+  process.chdir(d.casePath)
+
   // ...do tests
 
   // `d.match()` will check if the result folder has the same content as the baseline folder.
@@ -78,8 +92,22 @@ btest('test title', 'case-1', (t, d) => {
 });
 
 // test title can be omitted
-btest('case-1', (t) => {
-  // ...
+btest('case-1', (t, d) => {
+  t.is(d.casePath, 'path to the case')
+  t.is(d.baselinePath, 'path to the baseline of the case')
+  t.is(d.resultPath, 'where you should put your result')
+
+  return d.match()
+})
+
+// go through each test
+ftest.each((t, d) => {
+  t.is(d.caseName, 'name of the case')
+  t.is(d.casePath, 'path to the case')
+  t.is(d.baselinePath, 'path to the baseline of the case')
+  t.is(d.resultPath, 'where you should put your result')
+
+  return d.match()
 })
 ```
 
@@ -95,6 +123,7 @@ const ftest = fixture(test, 'fixture/cases');
 ftest.only(...)
 ftest.skip(...)
 ftest.failing(...)
+ftest.only.each.failing(...)
 ```
 
 For `before()`, `beforeEach()`, `after()`, `afterEach()`, `todo()`, use `ava` directly.
