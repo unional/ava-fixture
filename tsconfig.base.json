@@ -1,10 +1,9 @@
 {
   "compilerOptions": {
     "declaration": true,
-    "inlineSources": true,
-    "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "inlineSources": true,
     "lib": [
       "dom",
       "es2015",
@@ -15,8 +14,9 @@
     "newLine": "LF",
     "noImplicitAny": false,
     "noUnusedLocals": true,
-    "noUnusedParameters": false,
+    "noUnusedParameters": true,
     "removeComments": false,
+    "sourceMap": true,
     "strictNullChecks": true,
     "target": "es5"
   }

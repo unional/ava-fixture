@@ -14,7 +14,7 @@ ava('baseline and result must be specified together', t => {
 
 const btest = fixture(ava, 'fixtures/cases', 'fixtures/baselines', 'fixtures/results')
 
-btest.failing('case-1', (t, d) => {
+btest.failing('case-1', (_t, d) => {
   // no api to ease read file as the actual test target should be doing it.
   const file = readFileSync(resolve(d.casePath, 'somefile.txt')).toString()
 
@@ -25,7 +25,7 @@ btest.failing('case-1', (t, d) => {
   return d.match()
 })
 
-btest('case-pass', (t, d) => {
+btest('case-pass', (_t, d) => {
   // no api to ease read file as the actual test target should be doing it.
   const file = readFileSync(resolve(d.casePath, 'lorem-lpsum.txt')).toString()
 
