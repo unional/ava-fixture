@@ -5,7 +5,7 @@ import * as mkdirp from 'mkdirp'
 import { getLogger } from 'aurelia-logging'
 import fixture from './index'
 
-const log = getLogger('fixture:baseline:spec')
+const log = getLogger('fixture.baseline.spec')
 log.debug('starting fixture.baseline.spec')
 
 ava('baseline and result must be specified together', t => {

@@ -6,7 +6,7 @@ import { getLogger } from 'aurelia-logging'
 
 import fixture from './index'
 
-const logger = getLogger('fixture:spec')
+const logger = getLogger('fixture.spec')
 logger.debug('starting fixture.spec')
 
 const ftest = fixture(ava, join(process.env.PWD, 'fixtures/cases'))
