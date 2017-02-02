@@ -8,14 +8,48 @@
 ![badge-size-es5-url]
 ![badge-size-es2015-url]
 
-Helps you to easily write fixture tests with [`ava`](https://github.com/avajs/ava).
-
-## What is Fixture Test
-
-Fixture tests are tests that require access to some files.
-The tests may write files and in that case the files can be compared with a baseline (i.e. Baseline Tests)
+This library helps you to write fixture tests: test-per-folder or test-per-file.
 
 ## Usage
+
+For example, you are testing code that process files (e.g. a compiler, config-reader, etc).
+
+You put each test case inside its own folder:
+
+```sh
++ fixtures
+  + cases
+    + empty
+      - somefiles
+    + basic-case
+      - someOtherFiles
+    + single-line
+      - ...
+    + ...
+```
+
+You can run each test case like this:
+
+```ts
+import ava from 'ava';
+import fixture from 'ava-fixture';
+
+// Point to the base folder which contain the fixtures.
+// Use relative path starts from project root or absolute path
+const ftest = fixture(ava, 'fixtures/cases', 'fixtures/baselines', 'fixtures/results');
+
+ftest.each((t, d) => {
+  // d.caseName: 'empty', 'basic-case', 'single-line', etc
+  // d.casePath: absolute path points to each test case folder
+  // d.resultPath: absolute path points to each test result folder
+
+  // Your test target reads from `d.casePath` and writes to `d.resultPath`
+  target.process(d.casePath, d.resultPath)
+
+  // d.match() will compare the result folder against the baseline folder
+  return d.match()
+})
+```
 
 Assume you have the following folders:
 
@@ -31,7 +65,7 @@ Assume you have the following folders:
   + results # empty, not check into repository
 ```
 
-When you only need to access files in each test case (i.e. don't need to perform baseline test):
+You can also use this library to run tests that only read files:
 
 ```ts
 import ava from 'ava';
@@ -41,17 +75,13 @@ import fixture from 'ava-fixture';
 // Relative path starts from project root.
 const ftest = fixture(ava, 'fixture/cases');
 
-// You can also use absolute path.
-// const ftest = fixture(ava, join(process.cwd(), 'fixture/cases'));
-
 ftest('test title', 'case-1', (t, d) => {
   // t is ava test assertion.
-  t.is(d.casePath, 'path to the case')
+  t.is(d.casePath, 'absolut path the the case folder')
 
-  // If you need `cwd` at the case path.
-  process.chdir(d.casePath)
+  const result = target.read(d.casePath)
 
-  // ...test away
+  t.deepEqual(result, 'expected result')
 });
 
 // test title can be omitted
@@ -61,53 +91,12 @@ ftest('case-1', (t, d) => {
 
 // go through each test
 ftest.each((t, d) => {
-  t.is(d.caseName, 'name of the case')
-  t.is(d.casePath, 'path to the case')
-})
-```
-
-When you want to perform baseline tests:
-
-```ts
-import test from 'ava';
-import fixture from 'ava-fixture';
-
-// Point to the base folder which contain the fixtures.
-// Relative path starts from project root.
-const btest = fixture(test, 'fixture/cases', 'fixture/baselines', 'fixture/results');
-
-btest('test title', 'case-1', (t, d) => {
-  // t is ava test assertion.
-  t.is(d.casePath, 'path to the case')
-  t.is(d.baselinePath, 'path to the baseline of the case')
-  t.is(d.resultPath, 'where you should put your result')
-
-  // If you need `cwd` at the case path.
-  process.chdir(d.casePath)
-
-  // ...do tests
-
-  // `d.match()` will check if the result folder has the same content as the baseline folder.
-  return d.match()
-});
-
-// test title can be omitted
-btest('case-1', (t, d) => {
-  t.is(d.casePath, 'path to the case')
-  t.is(d.baselinePath, 'path to the baseline of the case')
-  t.is(d.resultPath, 'where you should put your result')
-
-  return d.match()
+  // ...
 })
 
-// go through each test
-ftest.each((t, d) => {
-  t.is(d.caseName, 'name of the case')
-  t.is(d.casePath, 'path to the case')
-  t.is(d.baselinePath, 'path to the baseline of the case')
-  t.is(d.resultPath, 'where you should put your result')
-
-  return d.match()
+// or run certain test based on filter
+ftest.each(/some filter/, (t, d) => {
+  // ...
 })
 ```
 
@@ -119,7 +108,6 @@ import fixture from 'ava-fixture';
 
 const ftest = fixture(test, 'fixture/cases');
 
-// Chainable: e.g. `ftest.only.skip.failing()`
 ftest.only(...)
 ftest.skip(...)
 ftest.failing(...)
