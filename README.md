@@ -49,20 +49,6 @@ ftest.each((t, d) => {
 })
 ```
 
-Assume you have the following folders:
-
-```sh
-+ fixtures
-  + cases
-    + case-1
-      - something.txt
-    + other-cases
-  + baselines
-    + case-1
-      - something.txt
-  + results # empty, not check into repository
-```
-
 You can also use this library to run tests that only read files:
 
 ```ts
