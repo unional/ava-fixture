@@ -35,6 +35,8 @@ ftest('abs path', 'case-1', (t, d) => {
   logger.debug(`outer cwd: ${cwd}`)
   logger.debug(`local cwd: ${localCwd}`)
 
+  t.is(d.caseName, 'case-1')
+
   // keep cwd since 0.8.0
   t.is(localCwd, cwd)
   process.chdir(d.casePath)

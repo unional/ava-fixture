@@ -42,6 +42,7 @@ export function fixture(ava: typeof test, casesPath: string, baselinesPath?: str
       }
 
       let d: any = {
+        caseName,
         casePath: resolve(casesPath, caseName)
       }
       if (baselinesPath) {

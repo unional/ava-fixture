@@ -5,6 +5,10 @@ import {
 
 export interface ContextualDiffContext {
   /**
+   * Name of the current running case.
+   */
+  caseName: string
+  /**
    * Path of the case folder
    */
   casePath: string
@@ -28,14 +32,7 @@ export interface ContextualBaselineDiffContext extends ContextualDiffContext {
   match(): Promise<any>
 }
 
-export interface ContextualEachDiffContext extends ContextualDiffContext {
-  /**
-   * Name of the current running case.
-   */
-  caseName: string
-}
-
-export interface ContextualBaselineEachDiffContext extends ContextualBaselineDiffContext, ContextualEachDiffContext {
+export interface ContextualBaselineEachDiffContext extends ContextualBaselineDiffContext, ContextualDiffContext {
 }
 
 /**
@@ -45,7 +42,7 @@ export type FixtureContextualTest = (t: ContextualTestContext, d: ContextualDiff
 
 export type FixtureContextualBaselineTest = (t: ContextualTestContext, d: ContextualBaselineDiffContext) => PromiseLike<any> | Iterator<any> | Observable | void
 
-export type FixtureContextualEachTest = (t: ContextualTestContext, d: ContextualEachDiffContext) => PromiseLike<any> | Iterator<any> | Observable | void
+export type FixtureContextualEachTest = (t: ContextualTestContext, d: ContextualDiffContext) => PromiseLike<any> | Iterator<any> | Observable | void
 
 export type FixtureContextualBaselineEachTest = (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => PromiseLike<any> | Iterator<any> | Observable | void
 
@@ -77,8 +74,8 @@ export namespace fixtureTest {
   export declare function skip(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
   export declare function skip(caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
 
-  export declare function each(filter: string | RegExp, run: (t: ContextualTestContext, d: ContextualEachDiffContext) => any): void
-  export declare function each(run: (t: ContextualTestContext, d: ContextualEachDiffContext) => any): void
+  export declare function each(filter: string | RegExp, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+  export declare function each(run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
 }
 
 export namespace fixtureTest.failing {
@@ -106,8 +103,8 @@ export namespace fixtureTest.only {
   export declare function skip(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
   export declare function skip(caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
 
-  export declare function each(filter: string | RegExp, run: (t: ContextualTestContext, d: ContextualEachDiffContext) => any): void
-  export declare function each(run: (t: ContextualTestContext, d: ContextualEachDiffContext) => any): void
+  export declare function each(filter: string | RegExp, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+  export declare function each(run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
 }
 
 export namespace fixtureTest.only.failing {
@@ -121,8 +118,8 @@ export namespace fixtureTest.only.skip {
 }
 
 export namespace fixtureTest.only.each {
-  export declare function failing(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualEachDiffContext) => any): void
-  export declare function failing(caseName: string, run: (t: ContextualTestContext, d: ContextualEachDiffContext) => any): void
+  export declare function failing(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+  export declare function failing(caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
 }
 
 export namespace fixtureTest.skip {
@@ -132,8 +129,8 @@ export namespace fixtureTest.skip {
   export declare function only(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
   export declare function only(caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
 
-  export declare function each(filter: string | RegExp, run: (t: ContextualTestContext, d: ContextualEachDiffContext) => any): void
-  export declare function each(run: (t: ContextualTestContext, d: ContextualEachDiffContext) => any): void
+  export declare function each(filter: string | RegExp, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+  export declare function each(run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
 }
 
 export namespace fixtureTest.skip.failing {
@@ -147,13 +144,13 @@ export namespace fixtureTest.skip.only {
 }
 
 export namespace fixtureTest.skip.each {
-  export declare function failing(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualEachDiffContext) => any): void
-  export declare function failing(caseName: string, run: (t: ContextualTestContext, d: ContextualEachDiffContext) => any): void
+  export declare function failing(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+  export declare function failing(caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
 }
 
 export namespace fixtureTest.each {
-  export declare function failing(filter: string | RegExp, run: (t: ContextualTestContext, d: ContextualEachDiffContext) => any): void
-  export declare function failing(run: (t: ContextualTestContext, d: ContextualEachDiffContext) => any): void
+  export declare function failing(filter: string | RegExp, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+  export declare function failing(run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
 }
 
 /**

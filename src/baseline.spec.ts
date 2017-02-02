@@ -25,7 +25,9 @@ btest.failing('case-1', (_t, d) => {
   return d.match()
 })
 
-btest('case-pass', (_t, d) => {
+btest('case-pass', (t, d) => {
+  t.is(d.caseName, 'case-pass')
+
   // no api to ease read file as the actual test target should be doing it.
   const file = readFileSync(resolve(d.casePath, 'lorem-lpsum.txt')).toString()
 
