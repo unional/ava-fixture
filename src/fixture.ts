@@ -155,25 +155,26 @@ export function fixture(ava: typeof test, casesPath: string, baselinesPath?: str
   }
 
   const eachFailing = eachCurry(ava.failing)
+  const eachSkip = eachCurry(ava.skip)
 
-  fn.failing.only = others.only
+  fn.failing.only = others.skip
   fn.failing.only.skip = others.skip
   fn.failing.skip = others.skip
-  fn.failing.skip.only = others.only
+  fn.failing.skip.only = others.skip
 
   fn.only.failing = others.failing
   fn.only.failing.skip = others.skip
   fn.only.skip = others.skip
-  fn.only.skip.failing = others.failing
+  fn.only.skip.failing = others.skip
   fn.only.each = others.each
   fn.only.each.failing = eachFailing
 
-  fn.skip.failing = others.failing
-  fn.skip.failing.only = others.only
-  fn.skip.only = others.only
-  fn.skip.only.failing = others.failing
-  fn.skip.each = others.each
-  fn.skip.each.failing = eachFailing
+  fn.skip.failing = others.skip
+  fn.skip.failing.only = others.skip
+  fn.skip.only = others.skip
+  fn.skip.only.failing = others.skip
+  fn.skip.each = eachSkip
+  fn.skip.each.failing = eachSkip
 
   fn.each.failing = eachFailing
 

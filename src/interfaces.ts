@@ -118,8 +118,8 @@ export namespace fixtureTest.only.skip {
 }
 
 export namespace fixtureTest.only.each {
-  export declare function failing(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
-  export declare function failing(caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+  export declare function failing(filter: string | RegExp, run: (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => any): void
+  export declare function failing(run: (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => any): void
 }
 
 export namespace fixtureTest.skip {
@@ -144,8 +144,8 @@ export namespace fixtureTest.skip.only {
 }
 
 export namespace fixtureTest.skip.each {
-  export declare function failing(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
-  export declare function failing(caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+  export declare function failing(filter: string | RegExp, run: (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => any): void
+  export declare function failing(run: (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => any): void
 }
 
 export namespace fixtureTest.each {
@@ -220,8 +220,8 @@ export namespace baselineTest.only.failing {
 }
 
 export namespace baselineTest.only.each {
-  export declare function failing(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => any): void
-  export declare function failing(caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => any): void
+  export declare function failing(filter: string | RegExp, run: (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => any): void
+  export declare function failing(run: (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => any): void
 }
 
 export namespace baselineTest.only.skip {
@@ -246,8 +246,8 @@ export namespace baselineTest.skip.failing {
 }
 
 export namespace baselineTest.skip.each {
-  export declare function failing(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => any): void
-  export declare function failing(caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => any): void
+  export declare function failing(filter: string | RegExp, run: (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => any): void
+  export declare function failing(run: (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => any): void
 }
 
 export namespace baselineTest.skip.only {

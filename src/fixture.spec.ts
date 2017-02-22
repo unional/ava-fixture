@@ -76,14 +76,6 @@ ftest('case-1', (t) => {
 //   t.pass('only without title works.')
 // })
 
-ftest.skip('skip test', 'case-1', t => {
-  t.pass('skip test works.')
-})
-
-ftest.skip('case-1', t => {
-  t.pass('skip without title works.')
-})
-
 // this is used by last test.
 const cwd = process.cwd()
 
