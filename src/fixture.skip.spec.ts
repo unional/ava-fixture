@@ -4,44 +4,28 @@ import fixture from './index'
 
 const ftest = fixture(ava, 'fixtures/cases')
 
-ava.before(() => {
-  throw new Error('should not run')
-})
+// ava.before(() => {
+//   throw new Error('should not run before')
+// })
 
 ava.beforeEach(() => {
-  throw new Error('should not run')
+  throw new Error('should not run beforeEach')
 })
 
-ava.after(() => {
-  throw new Error('should not run')
-})
+// ava.after(() => {
+//   throw new Error('should not run after')
+// })
 
 ava.afterEach(() => {
-  throw new Error('should not run')
+  throw new Error('should not run after each')
 })
 
-ava.skip('skip test', 'case-1', _t => {
-  throw new Error('should not run')
+ava.skip('skip test', _t => {
+  throw new Error('should not run ava skip')
 })
 
 ftest.skip('case-1', _t => {
-  throw new Error('should not run')
-})
-
-ftest.only.skip('skip test', 'case-1', _t => {
-  throw new Error('should not run')
-})
-
-ftest.only.skip('case-1', _t => {
-  throw new Error('should not run')
-})
-
-ftest.skip.only('skip test', 'case-1', _t => {
-  throw new Error('should not run')
-})
-
-ftest.skip.only('case-1', _t => {
-  throw new Error('should not run')
+  throw new Error('should not run ftest.skip')
 })
 
 ftest.skip.each(_t => {

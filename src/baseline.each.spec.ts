@@ -39,7 +39,7 @@ ctest.each((t, d) => {
   const expected = dirsCopy.shift()
   t.is(d.caseName, expected)
   t.is(d.casePath, join(parent, d.caseName))
-  return order.end(100)
+  return order.end(1)
 })
 
 const dirsCopy2 = [...dirs]
@@ -52,7 +52,7 @@ ctest.each(/.*pass$/, (t, d) => {
   dirsCopy2.splice(index, 1)
 
   t.is(d.casePath, join(parent, d.caseName))
-  return order2.end(100)
+  return order2.end(1)
 })
 
 const dirsCopy6 = [...dirs]
@@ -65,7 +65,7 @@ ctest.each('.*pass$', (t, d) => {
   dirsCopy6.splice(index, 1)
 
   t.is(d.casePath, join(parent, d.caseName))
-  return order6.end(100)
+  return order6.end(1)
 })
 
 const dirsCopy3 = [...dirs]
@@ -76,7 +76,7 @@ ctest.each.failing((t, d) => {
   const expected = dirsCopy3.shift()
   t.is(d.caseName, expected)
   t.is(d.casePath, join(parent, d.caseName))
-  return order3.end(100).then(() => Promise.reject('no'))
+  return order3.end(1).then(() => Promise.reject('no'))
 })
 
 const dirsCopy4 = [...dirs]
@@ -87,27 +87,38 @@ ctest.each.failing(/.*pass$/, (t, d) => {
   const expected = dirsCopy4.shift()
   t.is(d.caseName, expected)
   t.is(d.casePath, join(parent, d.caseName))
-  return order4.end(100).then(() => Promise.reject('no'))
+  return order4.end(1).then(() => Promise.reject('no'))
 })
 
-// const dirsCopy5 = [...dirs]
-// const order5 = new Order(dirs.length - 1)
-// ctest.each.failing('.*pass$', (t, d) => {
-//   log.info('each failing filter string', d.caseName, d.casePath)
-//   order5.step(dirs.length - dirsCopy5.length)
-//   const expected = dirsCopy5.shift()
-//   t.is(d.caseName, expected)
-//   t.is(d.casePath, join(parent, d.caseName))
-//   return order5.end(100).then(() => Promise.reject('no'))
-// })
-
-const dirsCopy7 = [...dirs]
-const order7 = new Order(dirs.length - 1)
-ctest.only.each.failing('.*pass$', (t, d) => {
-  log.info('each failing filter string', d.caseName, d.casePath)
-  order7.step(dirs.length - dirsCopy7.length)
-  const expected = dirsCopy7.shift()
+const dirsCopy5 = [...dirs]
+const order5 = new Order(dirs.length - 1)
+ctest.skip.each('.*pass$', (t, d) => {
+  log.info('each filter string', d.caseName, d.casePath)
+  order5.step(dirs.length - dirsCopy5.length)
+  const expected = dirsCopy5.shift()
   t.is(d.caseName, expected)
   t.is(d.casePath, join(parent, d.caseName))
-  return order7.end(100).then(() => Promise.reject('no'))
+  return order5.end(100).then(() => Promise.reject('no'))
 })
+
+const dirsCopy8 = [...dirs]
+const order8 = new Order(dirs.length - 1)
+ctest.skip.each.failing('.*pass$', (t, d) => {
+  log.info('each failing filter string', d.caseName, d.casePath)
+  order8.step(dirs.length - dirsCopy8.length)
+  const expected = dirsCopy8.shift()
+  t.is(d.caseName, expected)
+  t.is(d.casePath, join(parent, d.caseName))
+  return order8.end(100).then(() => Promise.reject('no'))
+})
+
+// const dirsCopy7 = [...dirs]
+// const order7 = new Order(dirs.length - 1)
+// ctest.only.each.failing('.*pass$', (t, d) => {
+//   log.info('each failing filter string', d.caseName, d.casePath)
+//   order7.step(dirs.length - dirsCopy7.length)
+//   const expected = dirsCopy7.shift()
+//   t.is(d.caseName, expected)
+//   t.is(d.casePath, join(parent, d.caseName))
+//   return order7.end(1).then(() => Promise.reject('no'))
+// })

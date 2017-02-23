@@ -154,29 +154,20 @@ export function fixture(ava: typeof test, casesPath: string, baselinesPath?: str
     (fn as any)[key] = (others as any)[key]
   }
 
-  const eachFailing = eachCurry(ava.failing)
-  const eachSkip = eachCurry(ava.skip)
+  fn.failing.only = curry(ava.failing.only)
+  fn.failing.skip = others.skip // curry(ava.failing.skip)
 
-  fn.failing.only = others.skip
-  fn.failing.only.skip = others.skip
-  fn.failing.skip = others.skip
-  fn.failing.skip.only = others.skip
+  fn.only.failing = fn.failing.only
+  fn.only.each = eachCurry(ava.only)
+  fn.only.each.failing = eachCurry(ava.only.failing)
 
-  fn.only.failing = others.failing
-  fn.only.failing.skip = others.skip
-  fn.only.skip = others.skip
-  fn.only.skip.failing = others.skip
-  fn.only.each = others.each
-  fn.only.each.failing = eachFailing
+  fn.skip.failing = fn.failing.skip
+  fn.skip.each = eachCurry(ava.skip)
+  fn.skip.each.failing = fn.skip.each // eachCurry(ava.skip.failing)
 
-  fn.skip.failing = others.skip
-  fn.skip.failing.only = others.skip
-  fn.skip.only = others.skip
-  fn.skip.only.failing = others.skip
-  fn.skip.each = eachSkip
-  fn.skip.each.failing = eachSkip
-
-  fn.each.failing = eachFailing
+  fn.each.failing = eachCurry(ava.failing)
+  fn.each.failing.only = fn.only.each.failing
+  fn.each.failing.skip = fn.skip.each.failing
 
   return fn
 }
