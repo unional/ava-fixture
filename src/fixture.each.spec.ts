@@ -129,3 +129,14 @@ ctest.skip.each.failing((t, d) => {
   t.is(d.casePath, join(parent, d.caseName))
   return order9.end(1).then(() => Promise.reject('no'))
 })
+
+const dirsCopy10 = [...dirs]
+const order10 = new Order(dirs.length)
+ctest.each((t, d) => {
+  log.info('skip each failing', d.caseName, d.casePath)
+  order10.step(dirs.length - dirsCopy10.length)
+  const expected = dirsCopy10.shift()
+  t.is(d.caseName, expected)
+  t.is(d.casePath, join(parent, d.caseName))
+  return order10.end(1)
+})
