@@ -7,19 +7,25 @@ import { readdirSync, statSync } from 'fs'
 import { join, resolve } from 'path'
 
 const cache = {}
+
 export function fixture(dir) {
   const absDir = resolve(dir)
   cache[absDir] = {}
 
-  const files = readdirSync(absDir)
-  files.forEach(file => {
-    const stat = statSync(join(absDir, file))
-    const id = stat.isDirectory() ? 'd' : 'f'
+  const entries = readdirSync(absDir)
+  entries.forEach(entry => {
+    const id = isDirectory(absDir, entry) ? 'd' : 'f'
     const node = cache[absDir][id] || (cache[absDir][id] = [])
-    node.push(file)
+    node.push(entry)
   })
   return {
-    eachFile(cb) {
+    directory(name, cb: (d: { name: string, path: string }) => any) {
+      cb({
+        name,
+        path: resolve(absDir, name)
+      })
+    },
+    eachFile(cb: (d: { name: string, path: string, filename: string }) => any) {
       cache[absDir].f.forEach(filename => {
         cb({
           filename,
@@ -28,7 +34,7 @@ export function fixture(dir) {
         })
       })
     },
-    eachDirectory(cb) {
+    eachDirectory(cb: (d: { name: string, path: string }) => any) {
       cache[absDir].d.forEach(name => {
         cb({
           name,
@@ -37,4 +43,9 @@ export function fixture(dir) {
       })
     }
   }
+}
+
+function isDirectory(path, name) {
+  const stat = statSync(join(path, name))
+  return stat.isDirectory()
 }

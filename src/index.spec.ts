@@ -24,3 +24,10 @@ test('eachFile', t => {
   })
   t.is(filenames.length, 0)
 })
+
+test('directory', t => {
+  fixture('cases').directory('case 4', d => {
+    t.is(d.name, 'case 4')
+    t.is(d.path, path.resolve('cases/case 4'))
+  })
+})
