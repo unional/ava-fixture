@@ -70,7 +70,7 @@
   },
   "peerDependencies": {
     "aurelia-logging": ">=1.2.0",
-    "ava": ">=0.17.0"
+    "ava": ">=0.19.1"
   },
   "devDependencies": {
     "@types/mkdirp": "^0.3.29",
