@@ -74,7 +74,7 @@
   },
   "devDependencies": {
     "@types/mkdirp": "^0.3.29",
-    "@types/node": "^7.0.4",
+    "@types/node": "^8.0.0",
     "assert-order": "^2.2.5",
     "aurelia-logging": "^1.2.0",
     "aurelia-logging-color": "^0.5.1",
