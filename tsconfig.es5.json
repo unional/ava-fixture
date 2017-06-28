@@ -3,8 +3,5 @@
   "compilerOptions": {
     "outDir": "dist/es5",
     "sourceRoot": "/ava-fixture"
-  },
-  "files": [
-    "src/index.ts"
-  ]
+  }
 }

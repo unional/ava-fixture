@@ -6,10 +6,11 @@ import { getLogger } from 'aurelia-logging'
 
 import fixture from './index'
 
+const cwd = process.cwd()
 const logger = getLogger('fixture.spec')
 logger.debug('starting fixture.spec')
 
-const ftest = fixture(ava, join(process.env.PWD, 'fixtures/cases'))
+const ftest = fixture(ava, join(process.env['PWD']!, 'fixtures/cases'))
 
 ava('shape test', t => {
   t.truthy(ftest.failing)
@@ -75,9 +76,6 @@ rtest.skip('skip test', 'case-1', t => {
 // ftest.only('case-1', t => {
 //   t.pass('only without title works.')
 // })
-
-// this is used by last test.
-const cwd = process.cwd()
 
 ava(t => {
   t.is(process.cwd(), cwd, 'normal ava test still under normal cwd.')

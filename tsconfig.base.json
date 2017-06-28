@@ -19,5 +19,8 @@
     "sourceMap": true,
     "strictNullChecks": true,
     "target": "es5"
-  }
+  },
+  "files": [
+    "src/index.ts"
+  ]
 }
