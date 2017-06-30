@@ -77,7 +77,7 @@
     "aurelia-polyfills": "^1.2.1",
     "ava": "^0.20.0",
     "bluebird": "^3.5.0",
-    "browser-env": "^2.0.31",
+    "browser-env": "^3.0.0",
     "core-js": "^2.4.1",
     "dependency-check": "^2.9.1",
     "eslint": "^4.1.1",
