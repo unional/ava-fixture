@@ -1,7 +1,8 @@
 import { readdirSync } from 'fs'
 import { resolve, join } from 'path'
 import test, {
-  ContextualTestContext
+  TestContext,
+  Context
 } from 'ava'
 
 import {
@@ -32,7 +33,7 @@ export function fixture(ava: typeof test, casesPath: string, baselinesPath?: str
     return ((
       title: string,
       caseName: string,
-      run: (t: ContextualTestContext, d: ContextualDiffContext) => any
+      run: (t: TestContext & Context<any>, d: ContextualDiffContext) => any
     ) => {
       const hasTitle = !!run
       if (!run) {
@@ -49,7 +50,7 @@ export function fixture(ava: typeof test, casesPath: string, baselinesPath?: str
         d.baselinePath = resolve(baselinesPath, caseName)
         d.resultPath = resolve(resultsPath, caseName)
       }
-      return testfn(`${hasTitle ? title + ' ' : ''}${caseName}`, (t: ContextualTestContext) => {
+      return testfn(`${hasTitle ? title + ' ' : ''}${caseName}`, (t: TestContext & Context<any>) => {
         if (baselinesPath) {
           d.match = curryMatch(d.baselinePath, d.resultPath, t)
         }
@@ -107,7 +108,7 @@ export function fixture(ava: typeof test, casesPath: string, baselinesPath?: str
           d.resultPath = resolve(resultsPath, caseName)
         }
 
-        return testfn(caseName, (t: ContextualTestContext) => {
+        return testfn(caseName, (t: TestContext & Context<any>) => {
           if (baselinesPath) {
             d.match = curryMatch(d.baselinePath, d.resultPath, t)
           }
@@ -159,7 +160,7 @@ export function fixture(ava: typeof test, casesPath: string, baselinesPath?: str
 
   fn.only.failing = fn.failing.only
   fn.only.each = eachCurry(ava.only)
-  fn.only.each.failing = eachCurry(ava.only.failing)
+  fn.only.each.failing = eachCurry(ava.only.failing as any)
 
   fn.skip.failing = fn.failing.skip
   fn.skip.each = eachCurry(ava.skip)

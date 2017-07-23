@@ -17,8 +17,7 @@
     "noUnusedParameters": true,
     "removeComments": false,
     "sourceMap": true,
-    "strictNullChecks": true,
-    "target": "es5"
+    "strictNullChecks": true
   },
   "files": [
     "src/index.ts"

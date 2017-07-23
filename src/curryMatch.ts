@@ -1,12 +1,12 @@
 import { getLogger } from 'aurelia-logging'
-import { ContextualTestContext } from 'ava'
+import { Context, TestContext } from 'ava'
 import { compare } from 'dir-compare'
 import { readFileSync, existsSync } from 'fs'
 import { join, relative } from 'path'
 
 const logger = getLogger('fixture')
 
-export function curryMatch(baselinePath: string, resultPath: string, t: ContextualTestContext) {
+export function curryMatch(baselinePath: string, resultPath: string, t: TestContext & Context<any>) {
   // here is ava cwd, which is the project root
   // Use this to do relative() with filename get good relative path.
   const cwd = process.cwd()

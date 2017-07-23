@@ -1,5 +1,6 @@
 import {
-  ContextualTestContext,
+  TestContext,
+  Context,
   Observable
 } from 'ava'
 
@@ -38,13 +39,13 @@ export interface ContextualBaselineEachDiffContext extends ContextualBaselineDif
 /**
  * The fixture text context (the callback function).
  */
-export type FixtureContextualTest = (t: ContextualTestContext, d: ContextualDiffContext) => PromiseLike<any> | Iterator<any> | Observable | void
+export type FixtureContextualTest<T = any> = (t: TestContext & Context<T>, d: ContextualDiffContext) => PromiseLike<any> | Iterator<any> | Observable | void
 
-export type FixtureContextualBaselineTest = (t: ContextualTestContext, d: ContextualBaselineDiffContext) => PromiseLike<any> | Iterator<any> | Observable | void
+export type FixtureContextualBaselineTest<T = any> = (t: TestContext & Context<T>, d: ContextualBaselineDiffContext) => PromiseLike<any> | Iterator<any> | Observable | void
 
-export type FixtureContextualEachTest = (t: ContextualTestContext, d: ContextualDiffContext) => PromiseLike<any> | Iterator<any> | Observable | void
+export type FixtureContextualEachTest<T = any> = (t: TestContext & Context<T>, d: ContextualDiffContext) => PromiseLike<any> | Iterator<any> | Observable | void
 
-export type FixtureContextualBaselineEachTest = (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => PromiseLike<any> | Iterator<any> | Observable | void
+export type FixtureContextualBaselineEachTest<T = any> = (t: TestContext & Context<T>, d: ContextualBaselineEachDiffContext) => PromiseLike<any> | Iterator<any> | Observable | void
 
 /**
  * Runs a fixture test.
@@ -53,68 +54,68 @@ export type FixtureContextualBaselineEachTest = (t: ContextualTestContext, d: Co
  * @param run The test function.
  * In this function, `cwd` is the fixture case folder.
  */
-export declare function fixtureTest(title: string, caseName: string, run: FixtureContextualTest): void;
+export declare function fixtureTest<T = any>(title: string, caseName: string, run: FixtureContextualTest<T>): void;
 
 /**
  * Runs a fixture test.
  * @param caseName Name of the test case, matching the folder under `path`.
  * @param run The test function.
  */
-export declare function fixtureTest(caseName: string, run: FixtureContextualTest): void;
+export declare function fixtureTest<T = any>(caseName: string, run: FixtureContextualTest<T>): void;
 
 export namespace fixtureTest {
   export declare function todo(title: string): void
 
-  export declare function failing(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
-  export declare function failing(caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+  export declare function failing<T = any>(title: string, caseName: string, run: (t: TestContext & Context<T>, d: ContextualDiffContext) => any): void
+  export declare function failing<T = any>(caseName: string, run: (t: TestContext & Context<T>, d: ContextualDiffContext) => any): void
 
-  export declare function only(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
-  export declare function only(caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+  export declare function only<T = any>(title: string, caseName: string, run: (t: TestContext & Context<T>, d: ContextualDiffContext) => any): void
+  export declare function only<T = any>(caseName: string, run: (t: TestContext & Context<T>, d: ContextualDiffContext) => any): void
 
-  export declare function skip(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
-  export declare function skip(caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+  export declare function skip<T = any>(title: string, caseName: string, run: (t: TestContext & Context<T>, d: ContextualDiffContext) => any): void
+  export declare function skip<T = any>(caseName: string, run: (t: TestContext & Context<T>, d: ContextualDiffContext) => any): void
 
-  export declare function each(filter: string | RegExp, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
-  export declare function each(run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+  export declare function each<T = any>(filter: string | RegExp, run: (t: TestContext & Context<T>, d: ContextualDiffContext) => any): void
+  export declare function each<T = any>(run: (t: TestContext & Context<T>, d: ContextualDiffContext) => any): void
 }
 
 export namespace fixtureTest.failing {
-  export declare function only(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
-  export declare function only(caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+  export declare function only<T = any>(title: string, caseName: string, run: (t: TestContext & Context<T>, d: ContextualDiffContext) => any): void
+  export declare function only<T = any>(caseName: string, run: (t: TestContext & Context<T>, d: ContextualDiffContext) => any): void
 
-  export declare function skip(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
-  export declare function skip(caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+  export declare function skip<T = any>(title: string, caseName: string, run: (t: TestContext & Context<T>, d: ContextualDiffContext) => any): void
+  export declare function skip<T = any>(caseName: string, run: (t: TestContext & Context<T>, d: ContextualDiffContext) => any): void
 }
 
 export namespace fixtureTest.only {
-  export declare function failing(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
-  export declare function failing(caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+  export declare function failing<T = any>(title: string, caseName: string, run: (t: TestContext & Context<T>, d: ContextualDiffContext) => any): void
+  export declare function failing<T = any>(caseName: string, run: (t: TestContext & Context<T>, d: ContextualDiffContext) => any): void
 
-  export declare function each(filter: string | RegExp, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
-  export declare function each(run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+  export declare function each<T = any>(filter: string | RegExp, run: (t: TestContext & Context<T>, d: ContextualDiffContext) => any): void
+  export declare function each<T = any>(run: (t: TestContext & Context<T>, d: ContextualDiffContext) => any): void
 }
 
 export namespace fixtureTest.only.each {
-  export declare function failing(filter: string | RegExp, run: (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => any): void
-  export declare function failing(run: (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => any): void
+  export declare function failing<T = any>(filter: string | RegExp, run: (t: TestContext & Context<T>, d: ContextualBaselineEachDiffContext) => any): void
+  export declare function failing<T = any>(run: (t: TestContext & Context<T>, d: ContextualBaselineEachDiffContext) => any): void
 }
 
 export namespace fixtureTest.skip {
-  export declare function failing(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
-  export declare function failing(caseName: string, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+  export declare function failing<T = any>(title: string, caseName: string, run: (t: TestContext & Context<T>, d: ContextualDiffContext) => any): void
+  export declare function failing<T = any>(caseName: string, run: (t: TestContext & Context<T>, d: ContextualDiffContext) => any): void
 
-  export declare function each(filter: string | RegExp, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
-  export declare function each(run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+  export declare function each<T = any>(filter: string | RegExp, run: (t: TestContext & Context<T>, d: ContextualDiffContext) => any): void
+  export declare function each<T = any>(run: (t: TestContext & Context<T>, d: ContextualDiffContext) => any): void
 }
 
 export namespace fixtureTest.skip.each {
-  export declare function failing(filter: string | RegExp, run: (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => any): void
-  export declare function failing(run: (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => any): void
+  export declare function failing<T = any>(filter: string | RegExp, run: (t: TestContext & Context<T>, d: ContextualBaselineEachDiffContext) => any): void
+  export declare function failing<T = any>(run: (t: TestContext & Context<T>, d: ContextualBaselineEachDiffContext) => any): void
 }
 
 export namespace fixtureTest.each {
-  export declare function failing(filter: string | RegExp, run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
-  export declare function failing(run: (t: ContextualTestContext, d: ContextualDiffContext) => any): void
+  export declare function failing<T = any>(filter: string | RegExp, run: (t: TestContext & Context<T>, d: ContextualDiffContext) => any): void
+  export declare function failing<T = any>(run: (t: TestContext & Context<T>, d: ContextualDiffContext) => any): void
 }
 
 /**
@@ -124,66 +125,66 @@ export namespace fixtureTest.each {
  * @param run The test function.
  * In this function, `cwd` is the fixture case folder.
  */
-export declare function baselineTest(title: string, caseName: string, run: FixtureContextualBaselineTest): void;
+export declare function baselineTest<T = any>(title: string, caseName: string, run: FixtureContextualBaselineTest<T>): void;
 
 /**
  * Runs a fixture test.
  * @param caseName Name of the test case, matching the folder under `path`.
  * @param run The test function.
  */
-export declare function baselineTest(caseName: string, run: FixtureContextualBaselineTest): void;
+export declare function baselineTest<T = any>(caseName: string, run: FixtureContextualBaselineTest<T>): void;
 
 export namespace baselineTest {
   export declare function todo(title: string): void
 
-  export declare function failing(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineDiffContext) => any): void
-  export declare function failing(caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineDiffContext) => any): void
+  export declare function failing<T = any>(title: string, caseName: string, run: (t: TestContext & Context<T>, d: ContextualBaselineDiffContext) => any): void
+  export declare function failing<T = any>(caseName: string, run: (t: TestContext & Context<T>, d: ContextualBaselineDiffContext) => any): void
 
-  export declare function only(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineDiffContext) => any): void
-  export declare function only(caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineDiffContext) => any): void
+  export declare function only<T = any>(title: string, caseName: string, run: (t: TestContext & Context<T>, d: ContextualBaselineDiffContext) => any): void
+  export declare function only<T = any>(caseName: string, run: (t: TestContext & Context<T>, d: ContextualBaselineDiffContext) => any): void
 
-  export declare function skip(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineDiffContext) => any): void
-  export declare function skip(caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineDiffContext) => any): void
+  export declare function skip<T = any>(title: string, caseName: string, run: (t: TestContext & Context<T>, d: ContextualBaselineDiffContext) => any): void
+  export declare function skip<T = any>(caseName: string, run: (t: TestContext & Context<T>, d: ContextualBaselineDiffContext) => any): void
 
-  export declare function each(filter: string | RegExp, run: (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => any): void
-  export declare function each(run: (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => any): void
+  export declare function each<T = any>(filter: string | RegExp, run: (t: TestContext & Context<T>, d: ContextualBaselineEachDiffContext) => any): void
+  export declare function each<T = any>(run: (t: TestContext & Context<T>, d: ContextualBaselineEachDiffContext) => any): void
 }
 
 export namespace baselineTest.failing {
-  export declare function only(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineDiffContext) => any): void
-  export declare function only(caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineDiffContext) => any): void
+  export declare function only<T = any>(title: string, caseName: string, run: (t: TestContext & Context<T>, d: ContextualBaselineDiffContext) => any): void
+  export declare function only<T = any>(caseName: string, run: (t: TestContext & Context<T>, d: ContextualBaselineDiffContext) => any): void
 
-  export declare function skip(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineDiffContext) => any): void
-  export declare function skip(caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineDiffContext) => any): void
+  export declare function skip<T = any>(title: string, caseName: string, run: (t: TestContext & Context<T>, d: ContextualBaselineDiffContext) => any): void
+  export declare function skip<T = any>(caseName: string, run: (t: TestContext & Context<T>, d: ContextualBaselineDiffContext) => any): void
 }
 
 export namespace baselineTest.only {
-  export declare function failing(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineDiffContext) => any): void
-  export declare function failing(caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineDiffContext) => any): void
+  export declare function failing<T = any>(title: string, caseName: string, run: (t: TestContext & Context<T>, d: ContextualBaselineDiffContext) => any): void
+  export declare function failing<T = any>(caseName: string, run: (t: TestContext & Context<T>, d: ContextualBaselineDiffContext) => any): void
 
-  export declare function each(filter: string | RegExp, run: (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => any): void
-  export declare function each(run: (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => any): void
+  export declare function each<T = any>(filter: string | RegExp, run: (t: TestContext & Context<T>, d: ContextualBaselineEachDiffContext) => any): void
+  export declare function each<T = any>(run: (t: TestContext & Context<T>, d: ContextualBaselineEachDiffContext) => any): void
 }
 
 export namespace baselineTest.only.each {
-  export declare function failing(filter: string | RegExp, run: (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => any): void
-  export declare function failing(run: (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => any): void
+  export declare function failing<T = any>(filter: string | RegExp, run: (t: TestContext & Context<T>, d: ContextualBaselineEachDiffContext) => any): void
+  export declare function failing<T = any>(run: (t: TestContext & Context<T>, d: ContextualBaselineEachDiffContext) => any): void
 }
 
 export namespace baselineTest.skip {
-  export declare function failing(title: string, caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineDiffContext) => any): void
-  export declare function failing(caseName: string, run: (t: ContextualTestContext, d: ContextualBaselineDiffContext) => any): void
+  export declare function failing<T = any>(title: string, caseName: string, run: (t: TestContext & Context<T>, d: ContextualBaselineDiffContext) => any): void
+  export declare function failing<T = any>(caseName: string, run: (t: TestContext & Context<T>, d: ContextualBaselineDiffContext) => any): void
 
-  export declare function each(filter: string | RegExp, run: (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => any): void
-  export declare function each(run: (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => any): void
+  export declare function each<T = any>(filter: string | RegExp, run: (t: TestContext & Context<T>, d: ContextualBaselineEachDiffContext) => any): void
+  export declare function each<T = any>(run: (t: TestContext & Context<T>, d: ContextualBaselineEachDiffContext) => any): void
 }
 
 export namespace baselineTest.skip.each {
-  export declare function failing(filter: string | RegExp, run: (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => any): void
-  export declare function failing(run: (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => any): void
+  export declare function failing<T = any>(filter: string | RegExp, run: (t: TestContext & Context<T>, d: ContextualBaselineEachDiffContext) => any): void
+  export declare function failing<T = any>(run: (t: TestContext & Context<T>, d: ContextualBaselineEachDiffContext) => any): void
 }
 
 export namespace baselineTest.each {
-  export declare function failing(filter: string | RegExp, run: (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => any): void
-  export declare function failing(run: (t: ContextualTestContext, d: ContextualBaselineEachDiffContext) => any): void
+  export declare function failing<T = any>(filter: string | RegExp, run: (t: TestContext & Context<T>, d: ContextualBaselineEachDiffContext) => any): void
+  export declare function failing<T = any>(run: (t: TestContext & Context<T>, d: ContextualBaselineEachDiffContext) => any): void
 }
