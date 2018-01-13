@@ -81,7 +81,7 @@
     "core-js": "^2.4.1",
     "dependency-check": "^2.9.1",
     "eslint": "^4.1.1",
-    "eslint-config-unional": "^0.2.3",
+    "eslint-config-unional": "^0.3.0",
     "mkdirp": "^0.5.1",
     "nyc": "^11.0.3",
     "rimraf": "^2.6.1",
