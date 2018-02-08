@@ -48,7 +48,7 @@ export function fixture(ava: typeof test, casesPath: string, baselinesPath?: str
       }
       if (baselinesPath) {
         d.baselinePath = resolve(baselinesPath, caseName)
-        d.resultPath = resolve(resultsPath, caseName)
+        d.resultPath = resolve(resultsPath!, caseName)
       }
       return testfn(`${hasTitle ? title + ' ' : ''}${caseName}`, (t: TestContext & Context<any>) => {
         if (baselinesPath) {
@@ -105,7 +105,7 @@ export function fixture(ava: typeof test, casesPath: string, baselinesPath?: str
         }
         if (baselinesPath) {
           d.baselinePath = resolve(baselinesPath, caseName)
-          d.resultPath = resolve(resultsPath, caseName)
+          d.resultPath = resolve(resultsPath!, caseName)
         }
 
         return testfn(caseName, (t: TestContext & Context<any>) => {
@@ -152,7 +152,7 @@ export function fixture(ava: typeof test, casesPath: string, baselinesPath?: str
   }
 
   for (let key in others) {
-    (fn as any)[key] = (others as any)[key]
+    fn[key] = others[key]
   }
 
   fn.failing.only = curry(ava.failing.only)
