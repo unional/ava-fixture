@@ -10,6 +10,12 @@
 
 This library helps you to write fixture tests: test-per-folder or test-per-file.
 
+## Important Notice
+
+I have created [`@unional/fixture`](https://github.com/unional/fixture) which will replace this package.
+It is decoupled from `ava` and can be used with any test runner.
+
+
 ## Usage
 
 For example, you are testing code that process files (e.g. a compiler, config-reader, etc).
