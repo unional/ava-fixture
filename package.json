@@ -90,6 +90,6 @@
     "typescript": "^2.7.1"
   },
   "dependencies": {
-    "dir-compare": "^1.4.0"
+    "dir-compare": "^1.5.0"
   }
 }
