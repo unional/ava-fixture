@@ -84,7 +84,7 @@
     "eslint-config-unional": "^0.3.6",
     "mkdirp": "^0.5.1",
     "nyc": "^11.4.1",
-    "rimraf": "^2.6.2",
+    "rimraf": "^2.6.3",
     "tslint": "^5.9.1",
     "tslint-config-unional": "^0.10.0",
     "typescript": "^2.7.1"
