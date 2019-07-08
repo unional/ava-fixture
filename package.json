@@ -79,7 +79,7 @@
     "bluebird": "^3.5.1",
     "browser-env": "^3.2.5",
     "core-js": "^2.5.3",
-    "dependency-check": "^3.0.0",
+    "dependency-check": "^3.4.0",
     "eslint": "^4.17.0",
     "eslint-config-unional": "^0.3.6",
     "mkdirp": "^0.5.1",
