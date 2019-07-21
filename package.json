@@ -80,7 +80,7 @@
     "browser-env": "^3.2.5",
     "core-js": "^2.5.3",
     "dependency-check": "^3.0.0",
-    "eslint": "^4.17.0",
+    "eslint": "^6.1.0",
     "eslint-config-unional": "^0.3.6",
     "mkdirp": "^0.5.1",
     "nyc": "^11.4.1",
