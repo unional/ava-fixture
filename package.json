@@ -69,7 +69,7 @@
     "ava": ">=0.20"
   },
   "devDependencies": {
-    "@types/mkdirp": "^0.5.2",
+    "@types/mkdirp": "^1.0.0",
     "@types/node": "^12.0.2",
     "assert-order": "^3.1.1",
     "aurelia-logging": "^1.4.0",
