@@ -42,7 +42,7 @@ export function fixture(ava: typeof test, casesPath: string, baselinesPath?: str
         caseName = title
       }
 
-      let d: any = {
+      const d: any = {
         caseName,
         casePath: resolve(casesPath, caseName)
       }
@@ -141,9 +141,9 @@ export function fixture(ava: typeof test, casesPath: string, baselinesPath?: str
     }
   }
 
-  let fn: any = curry(ava)
+  const fn: any = curry(ava)
 
-  let others = {
+  const others = {
     failing: curry(ava.failing),
     only: curry(ava.only),
     skip: curry(ava.skip),
@@ -151,7 +151,7 @@ export function fixture(ava: typeof test, casesPath: string, baselinesPath?: str
     each: eachCurry(ava)
   }
 
-  for (let key in others) {
+  for (const key in others) {
     fn[key] = others[key]
   }
 

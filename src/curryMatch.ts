@@ -18,9 +18,9 @@ export function curryMatch(baselinePath: string, resultPath: string, t: TestCont
     return compare(baselinePath, resultPath)
       .then((res) => {
         t.is(res.differences, 0, 'Some files / folders mismatch')
-        res.diffSet.forEach(d => {
-          const filename1 = join(d.path1, d.name1)
-          const filename2 = join(d.path2, d.name2)
+        res.diffSet?.forEach(d => {
+          const filename1 = join(d.path1!, d.name1!)
+          const filename2 = join(d.path2!, d.name2!)
           const file1 = readFileSync(filename1).toString()
           const file2 = readFileSync(filename2).toString()
           if (file1 !== file2) {

@@ -1,28 +1,25 @@
 {
   "name": "ava-fixture",
   "description": "Write fixture tests with ava",
-  "version": "0.11.0",
-  "main": "dist/es5/index.js",
-  "module": "dist/es2015/index.js",
-  "typings": "dist/es5/index.d.ts",
+  "version": "0.0.0-development",
+  "main": "./dist/es5/index.js",
+  "typings": "./dist/es5/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "npm run clean && npm run build-es5 && npm run build-es2015",
+    "build": "yarn clean && yarn build-es5",
     "build-es5": "tsc -p tsconfig.es5.json",
-    "build-es2015": "tsc -p tsconfig.es2015.json",
     "clean": "rimraf dist",
-    "coverage": "nyc --check-coverage --branches 85 --functions 85 --lines 85 npm test",
+    "coverage": "nyc --check-coverage --branches 85 --functions 85 --lines 85 yarn test",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "demo": "node scripts/demo.js",
-    "dependency-check": "dependency-check . --unused --no-dev -i ava && dependency-check . --missing --no-dev",
-    "lint": "tslint -p tsconfig.json 'src/**/*.ts'",
+    "lint": "eslint --ext=js,ts .",
     "postpublish": "git push",
-    "prepare": "npm run build",
-    "preversion": "git pull && npm run verify",
+    "prepare": "yarn build",
+    "preversion": "git pull && yarn verify",
     "test": "rimraf dist-spec && tsc && ava",
-    "verify": "npm run lint && npm run coverage && npm run build && npm run dependency-check",
+    "verify": "yarn lint && yarn coverage && yarn build",
     "watch": "rimraf dist-spec && node scripts/watch.js"
   },
   "author": {
@@ -35,7 +32,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/unional/ava-fixture.git"
+    "url": "https://github.com/unional/ava-fixture.git"
   },
   "license": "MIT",
   "keywords": [
@@ -79,15 +76,13 @@
     "bluebird": "^3.5.1",
     "browser-env": "^3.2.5",
     "core-js": "^2.5.3",
-    "dependency-check": "^3.0.0",
-    "eslint": "^4.17.0",
-    "eslint-config-unional": "^0.3.6",
+    "eslint": "^7.7.0",
+    "eslint-plugin-harmony": "^3.0.1",
     "mkdirp": "^0.5.1",
     "nyc": "^11.4.1",
     "rimraf": "^2.6.2",
-    "tslint": "^5.9.1",
-    "tslint-config-unional": "^0.10.0",
-    "typescript": "^2.7.1"
+    "typescript": "^4.0.2",
+    "semantic-release": "^17.1.1"
   },
   "dependencies": {
     "dir-compare": "^1.4.0"

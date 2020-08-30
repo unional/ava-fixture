@@ -8,7 +8,7 @@ export interface ContextualDiffContext {
   /**
    * Name of the current running case.
    */
-  caseName: string
+  caseName: string,
   /**
    * Path of the case folder
    */
@@ -19,12 +19,12 @@ export interface ContextualBaselineDiffContext extends ContextualDiffContext {
   /**
    * Path of the case's baseline folder
    */
-  baselinePath: string
+  baselinePath: string,
 
   /**
    * Path of the case's result folder
    */
-  resultPath: string
+  resultPath: string,
 
   /**
    * Check if the baseline folder and the result folder matches.

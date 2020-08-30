@@ -1,14 +1,17 @@
 {
-  "extends": "unional",
-  "root": true,
   "env": {
-    "node": true,
-    "es6": true
+    "es6": true,
+    "node": true
   },
-  "rules": {
-    "func-names": 0,
-    "no-console": [
-      0
-    ]
-  }
+  "extends": "plugin:harmony/latest",
+  "overrides": [
+    {
+      "extends": "plugin:harmony/ts-recommended",
+      "files": [
+        "*.ts",
+        "*.tsx"
+      ]
+    }
+  ],
+  "root": true
 }
